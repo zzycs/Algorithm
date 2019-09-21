@@ -13,7 +13,7 @@ public class Algorithm_List {
 	/**
 	 * 两个链表的第一个公共结点
 	 */
-	static Node_List FindFirstCommonNode(Node_List pHead1, Node_List pHead2) {
+	public static Node_List FindFirstCommonNode(Node_List pHead1, Node_List pHead2) {
 		Node_List p1 = pHead1;
 		Node_List p2 = pHead2;
 		while (p1 != p2) {
@@ -26,7 +26,7 @@ public class Algorithm_List {
 	/**
 	 * 链表中倒数第k个结点
 	 */
-	static Node_List FindKthToTail(Node_List head, int k) {
+	public static Node_List FindKthToTail(Node_List head, int k) {
 		if (head == null || k == 0) return null;
 		Node_List temp = head;
 		while (--k > 0) {
@@ -43,7 +43,7 @@ public class Algorithm_List {
 	/**
 	 * 合并两个排序的链表
 	 */
-	static Node_List Merge(Node_List list1, Node_List list2) {
+	public static Node_List Merge(Node_List list1, Node_List list2) {
 		if (list1 == null) return list2;
 		if (list2 == null) return list1;
 		Node_List head = null;
@@ -75,7 +75,7 @@ public class Algorithm_List {
 	/**
 	 * 反转链表
 	 */
-	static Node_List ReverseList(Node_List head) {
+	public static Node_List ReverseList(Node_List head) {
 		if (head == null) return null;
 		Node_List prev = null;
 		Node_List next = null;
@@ -91,7 +91,7 @@ public class Algorithm_List {
 	/**
 	 * 链表中检测是否有环
 	 */
-	static Boolean IsLoop(Node_List pHead) {
+	public static Boolean IsLoop(Node_List pHead) {
 		if (pHead == null || pHead.next == null) return false;
 		Node_List p1 = pHead;
 		Node_List p2 = pHead;
@@ -108,7 +108,7 @@ public class Algorithm_List {
 	/**
 	 * 链表中环的入口节点
 	 */
-	static Node_List EntryNodeOfLoop(Node_List pHead) {
+	public static Node_List EntryNodeOfLoop(Node_List pHead) {
 		if (pHead == null || pHead.next == null) return null;
 		Node_List p1 = pHead;
 		Node_List p2 = pHead;
