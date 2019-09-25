@@ -11,11 +11,40 @@ public class Algorithm_String {
 		String substring = "ABCDABD";
 		System.out.println(BruteForce(string, substring));
 		System.out.println(KMP(string, substring));
+		System.out.println(LCS("acbcbcef", "abcbced"));
 	}
 
 	/******************** 最长回文子串 ********************/
+	
+	/******************** 括号匹配 ********************/
 
 	/******************** 最长公共子串 ********************/
+
+	/**
+	 * 最长公共子串（Longest Common Substring）
+	 */
+	public static String LCS(String s1, String s2) {
+		dp = new int[s1.length()][s2.length()];
+		int max = 0, end = 0;
+		for (int i = 0; i < s1.length(); i++)
+			if (s1.charAt(i) == s2.charAt(0)) dp[i][0] = 1;
+		for (int j = 0; j < s2.length(); j++)
+			if (s2.charAt(j) == s1.charAt(0)) dp[0][j] = 1;
+		for (int i = 1; i < s1.length(); i++) {
+			for (int j = 1; j < s2.length(); j++) {
+				if (s1.charAt(i) == s2.charAt(j)) {
+					dp[i][j] = dp[i - 1][j - 1] + 1;
+				} else {
+					dp[i][j] = 0;
+				}
+				if (dp[i][j] > max) {
+					max = dp[i][j];
+					end = i + 1;
+				}
+			}
+		}
+		return s1.substring(end - max, end);
+	}
 
 	/******************** 子字符串的搜索 ********************/
 
@@ -91,5 +120,6 @@ public class Algorithm_String {
 	/******************** 辅助字段 ********************/
 
 	public static int[] PMT; // 部分匹配表
+	public static int[][] dp;
 
 }
