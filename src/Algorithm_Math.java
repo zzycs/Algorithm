@@ -9,7 +9,7 @@ import java.util.*;
 public class Algorithm_Math {
 
 	public static void main(String[] args) {
-		
+
 	}
 
 	/******************** 分班问题 ********************/
@@ -164,12 +164,6 @@ public class Algorithm_Math {
 		}
 	}
 
-	public static void swap(int[] array, int i, int j) {
-		int temp = array[i];
-		array[i] = array[j];
-		array[j] = temp;
-	}
-
 	/**
 	 * 字符串的排列
 	 */
@@ -185,6 +179,28 @@ public class Algorithm_Math {
 			permutation(chars, index + 1, result);
 			swap(chars, j, index);
 		}
+	}
+
+	/******************** 数学 ********************/
+
+	/**
+	 * 最大公约数
+	 */
+	public static long gcd(long a, long b) {
+		long r = a % b;
+		if (r == 0) {
+			return b;
+		} else {
+			return gcd(b, r);
+		}
+	}
+
+	/******************** 辅助方法 ********************/
+
+	public static void swap(int[] array, int i, int j) {
+		int temp = array[i];
+		array[i] = array[j];
+		array[j] = temp;
 	}
 
 	public static void swap(char[] array, int i, int j) {
