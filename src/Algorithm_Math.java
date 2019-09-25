@@ -8,9 +8,7 @@ import java.util.*;
  */
 public class Algorithm_Math {
 
-	public static void main(String[] args) {
-
-	}
+	public static void main(String[] args) {}
 
 	/******************** 分班问题 ********************/
 
@@ -18,12 +16,28 @@ public class Algorithm_Math {
 
 	/******************** 硬币问题 ********************/
 
+	/**
+	 * 最少硬币数量
+	 */
+	static int[] coin(int[] coins, int money) {
+		int[] mins = new int[money + 1];
+		int[] number = new int[coins.length];
+		for (int x = 1; x <= money; x++) {
+			for (int y = 0; y < coins.length; y++) {
+				if (coins[y] <= x && mins[x] > mins[x - coins[y]] + 1) {
+					
+				}
+			}
+		}
+		return number;
+	}
+
 	/******************** 背包问题 ********************/
 
 	/**
 	 * 0-1背包
 	 */
-	public static int[] ZeroOnePack(int[] weight, int[] value, int resource, int n) {
+	static int[] ZeroOnePack(int[] weight, int[] value, int resource, int n) {
 		int[][] dp = new int[n][resource + 1];
 		int[] knapsnack = new int[n];
 		int x = 0, y;
@@ -61,7 +75,7 @@ public class Algorithm_Math {
 	/**
 	 * 完全背包
 	 */
-	public static int[] CompletePack(int[] weight, int[] value, int resource, int n) {
+	static int[] CompletePack(int[] weight, int[] value, int resource, int n) {
 		int[][] dp = new int[n][resource + 1];
 		int[] knapsnack = new int[n];
 		int x = 0, y;
@@ -99,7 +113,7 @@ public class Algorithm_Math {
 	/**
 	 * 多重背包
 	 */
-	public static int[] MultiPack(int[] weight, int[] value, int[] number, int resource, int n) {
+	static int[] MultiPack(int[] weight, int[] value, int[] number, int resource, int n) {
 		int[][] dp = new int[n][resource + 1];
 		int[] knapsnack = new int[n];
 		int x = 0, y;
@@ -143,69 +157,164 @@ public class Algorithm_Math {
 		return knapsnack;
 	}
 
-	/******************** 排列问题 ********************/
+	/******************** 排列组合问题 ********************/
 
 	/**
-	 * 数字的排列
+	 * 排列（基于交换）
 	 */
-	public static void permutation(int[] array, int index, int length,
+	static void permutation(int index, int[] array, ArrayList<Integer> temp,
 			ArrayList<ArrayList<Integer>> result) {
-		if (index == length - 1) {
-			ArrayList<Integer> list = new ArrayList<>();
-			for (int i = 0; i < length; i++)
-				list.add(array[i]);
-			result.add(list);
+		if (index == array.length) {
+			result.add(new ArrayList<>(temp));
 		} else {
-			for (int i = index; i < length; i++) {
+			for (int i = index; i < array.length; i++) {
 				swap(array, index, i);
-				permutation(array, index + 1, length, result);
+				temp.add(array[index]);
+				permutation(index + 1, array, temp, result);
+				temp.remove(temp.size() - 1);
 				swap(array, index, i);
 			}
 		}
 	}
 
 	/**
-	 * 字符串的排列
+	 * 排列
 	 */
-	public static void permutation(char[] chars, int index, ArrayList<String> result) {
-		if (index == chars.length) {
-			String s = String.valueOf(chars);
-			if (!result.contains(s)) {
-				result.add(s);
+	static void permutation(int[] array, ArrayList<Integer> temp,
+			ArrayList<ArrayList<Integer>> result) {
+		if (temp.size() == array.length) {
+			result.add(new ArrayList<>(temp));
+		} else {
+			for (int i = 0; i < array.length; i++) {
+				if (temp.contains(array[i])) continue;
+				temp.add(array[i]);
+				permutation(array, temp, result);
+				temp.remove(temp.size() - 1);
 			}
-		}
-		for (int j = index; j < chars.length; j++) {
-			swap(chars, index, j);
-			permutation(chars, index + 1, result);
-			swap(chars, j, index);
 		}
 	}
 
-	/******************** 数学 ********************/
+	/**
+	 * 无重复排列
+	 */
+	static void uniquePermutation(int[] array, ArrayList<Integer> temp,
+			ArrayList<ArrayList<Integer>> result, boolean[] closed) {
+		if (temp.size() == array.length) {
+			result.add(new ArrayList<>(temp));
+		} else {
+			for (int i = 0; i < array.length; i++) {
+				if (closed[i] || i > 0 && array[i] == array[i - 1] && !closed[i - 1]) continue;
+				closed[i] = true;
+				temp.add(array[i]);
+				uniquePermutation(array, temp, result, closed);
+				closed[i] = false;
+				temp.remove(temp.size() - 1);
+			}
+		}
+	}
+
+	/**
+	 * 子集组合
+	 */
+	static void combination(int index, int[] array, ArrayList<Integer> temp,
+			ArrayList<ArrayList<Integer>> result) {
+		result.add(new ArrayList<>(temp));
+		for (int i = index; i < array.length; i++) {
+			temp.add(array[i]);
+			combination(i + 1, array, temp, result);
+			temp.remove(temp.size() - 1);
+		}
+	}
+
+	/**
+	 * 无重复子集组合
+	 */
+	static void uniqueCombination(int index, int[] array, ArrayList<Integer> temp,
+			ArrayList<ArrayList<Integer>> result) {
+		result.add(new ArrayList<>(temp));
+		for (int i = index; i < array.length; i++) {
+			if (i > index && array[i] == array[i - 1]) continue; // 跳过重复
+			temp.add(array[i]);
+			uniqueCombination(i + 1, array, temp, result);
+			temp.remove(temp.size() - 1);
+		}
+	}
+
+	/**
+	 * 和为sum的子集组合
+	 */
+	static void sumCombination(int index, int[] array, ArrayList<Integer> temp,
+			ArrayList<ArrayList<Integer>> result, int sum) {
+		if (sum < 0) {
+			return;
+		} else if (sum == 0) {
+			result.add(new ArrayList<>(temp));
+		} else {
+			for (int i = index; i < array.length; i++) {
+				temp.add(array[i]);
+				sumCombination(i + 1, array, temp, result, sum - array[i]);
+				temp.remove(temp.size() - 1);
+			}
+		}
+	}
+
+	/**
+	 * 和为sum的无重复子集组合
+	 */
+	static void sumUniqueCombination(int index, int[] array, ArrayList<Integer> temp,
+			ArrayList<ArrayList<Integer>> result, int sum) {
+		if (sum < 0) {
+			return;
+		} else if (sum == 0) {
+			result.add(new ArrayList<>(temp));
+		} else {
+			for (int i = index; i < array.length; i++) {
+				if (i > index && array[i] == array[i - 1]) continue; // 跳过重复
+				temp.add(array[i]);
+				sumCombination(i + 1, array, temp, result, sum - array[i]);
+				temp.remove(temp.size() - 1);
+			}
+		}
+	}
+
+	/******************** 数论 ********************/
 
 	/**
 	 * 最大公约数
 	 */
-	public static long gcd(long a, long b) {
-		long r = a % b;
-		if (r == 0) {
-			return b;
-		} else {
-			return gcd(b, r);
-		}
+	static long gcd(long a, long b) {
+		if (b == 0) return a;
+		else return gcd(b, a % b);
+	}
+
+	/**
+	 * 最小公倍数
+	 */
+	static long lcm(long a, long b) {
+		return a * b / gcd(a, b);
 	}
 
 	/******************** 辅助方法 ********************/
 
-	public static void swap(int[] array, int i, int j) {
+	static void swap(int[] array, int i, int j) {
 		int temp = array[i];
 		array[i] = array[j];
 		array[j] = temp;
 	}
 
-	public static void swap(char[] array, int i, int j) {
+	static void swap(char[] array, int i, int j) {
 		char temp = array[i];
 		array[i] = array[j];
 		array[j] = temp;
+	}
+
+	static void printDoubleList(ArrayList<ArrayList<Integer>> list) {
+		for (ArrayList<Integer> innerList : list) {
+			for (int element : innerList) {
+				System.out.print(element);
+			}
+			System.out.print(" ");
+		}
+		System.out.println();
 	}
 }
