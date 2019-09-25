@@ -1,3 +1,5 @@
+import java.util.*;
+
 /**
  * 数组算法
  * 
@@ -14,9 +16,73 @@ public class Algorithm_Array {
 		}
 	}
 
-	/******************** 最长递增子序列 ********************/
+	/****************** 最长递增子序列 Longest Increasing Subsequence ******************/
 
-	/******************** 最长公共子序列 ********************/
+	/**
+	 * 求最长递增子序列长度
+	 */
+	public static int getLengthOfLIS(int[] array) {
+		temp = new int[array.length];
+		temp[0] = array[0];
+		int length = 1;
+		for (int i = 1; i < array.length; i++) {
+			if (array[i] > temp[length - 1]) {
+				temp[length] = array[i];
+				length++;
+			} else {
+				int position = getInsertPosition(array, array[i], 0, length - 1);
+				temp[position] = array[i];
+			}
+		}
+		return length;
+	}
+
+	/**
+	 * 打印最长递增子序列
+	 */
+	public static void printLIS(int[] array) {
+		int[] sortedArray = new int[array.length];
+		for (int i = 0; i < array.length; i++)
+			sortedArray[i] = array[i];
+		Arrays.sort(sortedArray);
+		getLengthOfLCS(array, sortedArray);
+		printLCS(array, sortedArray, array.length, sortedArray.length);
+	}
+
+	/******************** 最长公共子序列 Longest Common Sequence ********************/
+
+	/**
+	 * 求最长公共子序列长度
+	 */
+	public static void getLengthOfLCS(int[] a1, int[] a2) {
+		dp = new int[a1.length + 1][a2.length + 1];
+		for (int i = 1; i <= a1.length; i++) {
+			for (int j = 1; j <= a2.length; j++) {
+				if (a1[i - 1] == a2[j - 1]) {
+					dp[i][j] = dp[i - 1][j - 1] + 1;
+				} else if (dp[i][j - 1] >= dp[i - 1][j]) {
+					dp[i][j] = dp[i][j - 1];
+				} else {
+					dp[i][j] = dp[i - 1][j];
+				}
+			}
+		}
+	}
+
+	/**
+	 * 打印最长公共子序列
+	 */
+	public static void printLCS(int[] a1, int[] a2, int i, int j) {
+		if (i == 0 || j == 0) return;
+		if (dp[i][j] == dp[i - 1][j]) {
+			printLCS(a1, a2, i - 1, j);
+		} else if (dp[i][j] == dp[i][j - 1]) {
+			printLCS(a1, a2, i, j - 1);
+		} else {
+			printLCS(a1, a2, i - 1, j - 1);
+			System.out.print(a1[i - 1]);
+		}
+	}
 
 	/******************** 数组的排序 ********************/
 
@@ -274,6 +340,75 @@ public class Algorithm_Array {
 		return temp;
 	}
 
+	/******************** 数组查找 ********************/
+
+	/**
+	 * 二分查找（无重复数组）
+	 */
+	public static int binarySearch(int[] array, int target, int low, int high) {
+		int mid;
+		while (low < high) {
+			mid = (low + high) / 2;
+			if (array[mid] < target) {
+				low = mid + 1;
+			} else if (array[mid] > target) {
+				high = mid - 1;
+			} else {
+				return mid;
+			}
+		}
+		return -1;
+	}
+
+	/**
+	 * 查找重复有序数组中k的插入位置
+	 */
+	public static int getInsertPosition(int[] array, int k, int low, int high) {
+		int mid;
+		while (low <= high) {
+			mid = (low + high) / 2;
+			if (array[mid] < k) {
+				low = mid + 1;
+			} else if (array[mid] > k) {
+				high = mid - 1;
+			} else {
+				return mid;
+			}
+		}
+		return low;
+	}
+
+	/**
+	 * 查找重复有序数组中k出现的次数
+	 */
+	public static int getNumberOfK(int[] array, int k, int low, int high) {
+		int mid;
+		while (low < high) {
+			mid = (low + high) / 2;
+			if (array[mid] < k) {
+				while (array[mid] == array[mid + 1]) {
+					mid++;
+				}
+				low = mid + 1;
+			} else if (array[mid] > k) {
+				while (array[mid] == array[mid - 1]) {
+					mid--;
+				}
+				high = mid - 1;
+			} else {
+				int start = mid, end = mid;
+				while (start >= low && array[start] == array[start - 1]) {
+					start--;
+				}
+				while (end <= high && array[end] == array[end + 1]) {
+					end++;
+				}
+				return start - end + 1;
+			}
+		}
+		return 0;
+	}
+
 	/******************** 辅助方法 ********************/
 
 	/**
@@ -366,4 +501,5 @@ public class Algorithm_Array {
 	/******************** 辅助字段 ********************/
 
 	public static int[] temp;
+	public static int[][] dp;
 }
