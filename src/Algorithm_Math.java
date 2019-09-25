@@ -14,22 +14,28 @@ public class Algorithm_Math {
 
 	/******************** 任务分配问题 ********************/
 
-	/******************** 硬币问题 ********************/
+	/******************** 硬币找零问题 ********************/
 
 	/**
-	 * 最少硬币数量
+	 * 最少硬币找零数量
 	 */
-	static int[] coin(int[] coins, int money) {
-		int[] mins = new int[money + 1];
-		int[] number = new int[coins.length];
-		for (int x = 1; x <= money; x++) {
-			for (int y = 0; y < coins.length; y++) {
-				if (coins[y] <= x && mins[x] > mins[x - coins[y]] + 1) {
-					
+	static int coinChange(int[] coins, int amount) {
+		int[] dp = new int[amount + 1];
+		for (int sum = 1; sum <= amount; sum++) {
+			int minCount = -1;
+			for (int coin : coins) {
+				if (sum >= coin && dp[sum - coin] != -1) {
+					int totalCount = dp[sum - coin] + 1;
+					if (minCount < 0) {
+						minCount = totalCount;
+					} else {
+						minCount = Math.min(totalCount, minCount);
+					}
 				}
 			}
+			dp[sum] = minCount;
 		}
-		return number;
+		return dp[amount];
 	}
 
 	/******************** 背包问题 ********************/
