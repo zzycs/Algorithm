@@ -14,6 +14,8 @@ public class Algorithm_Math {
 
 	/******************** 任务分配问题 ********************/
 
+	/******************** 区间合并问题 ********************/
+
 	/******************** 硬币找零问题 ********************/
 
 	/**
@@ -298,6 +300,19 @@ public class Algorithm_Math {
 	 */
 	static long lcm(long a, long b) {
 		return a * b / gcd(a, b);
+	}
+
+	/**
+	 * 快速幂
+	 */
+	static long binPow(long a, long b) {
+		if (b == 0) return 1;
+		if (b == 1) return a;
+		if (b % 2 == 0) {
+			return binPow(a * a, b / 2);
+		} else {
+			return a * binPow(a * a, (b - 1) / 2);
+		}
 	}
 
 	/******************** 辅助方法 ********************/
