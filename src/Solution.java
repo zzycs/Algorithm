@@ -19,7 +19,7 @@ public class Solution {
 	/**
 	 * 字符串的排列
 	 */
-	static ArrayList<String> Permutation(String str) {
+	public static ArrayList<String> Permutation(String str) {
 		ArrayList<String> list = new ArrayList<>();
 		if (str != null && str.length() > 0) {
 			PermutationRec(str.toCharArray(), 0, list);
@@ -28,7 +28,7 @@ public class Solution {
 		return list;
 	}
 
-	static ArrayList<String> PermutationRec(char[] chars, int i, ArrayList<String> list) {
+	public static ArrayList<String> PermutationRec(char[] chars, int i, ArrayList<String> list) {
 		if (i == chars.length) {
 			String s = String.valueOf(chars);
 			if (!list.contains(s)) list.add(s);
@@ -41,7 +41,7 @@ public class Solution {
 		return list;
 	}
 
-	static void swap(char[] chars, int i, int j) {
+	public static void swap(char[] chars, int i, int j) {
 		char temp = chars[i];
 		chars[i] = chars[j];
 		chars[j] = temp;
@@ -52,7 +52,7 @@ public class Solution {
 	/**
 	 * 剪绳子
 	 */
-	static int cutRope(int target) {
+	public static int cutRope(int target) {
 		if (target < 2) return 0;
 		if (target == 2) return 1;
 		if (target == 3) return 2;
@@ -67,7 +67,7 @@ public class Solution {
 	/**
 	 * 数值的整数次方
 	 */
-	static double Power(double base, int exponent) {
+	public static double Power(double base, int exponent) {
 		boolean negative = false;
 		double result = 1;
 		if (exponent == 0) {
@@ -92,7 +92,7 @@ public class Solution {
 	/**
 	 * 丑数
 	 */
-	static int GetUglyNumber_Solution(int index) {
+	public static int GetUglyNumber_Solution(int index) {
 		if (index < 7) return index;
 		int[] result = new int[index];
 		result[0] = 1;
@@ -109,7 +109,7 @@ public class Solution {
 	/**
 	 * 整数中1出现的次数
 	 */
-	static int NumberOf1Between1AndN_Solution(int n) {
+	public static int NumberOf1Between1AndN_Solution(int n) {
 		int count = 0;
 		for (int i = 1; i <= n; i *= 10) {
 			int a = n / i;
@@ -130,7 +130,7 @@ public class Solution {
 	/**
 	 * 斐波那契数列（递归）
 	 */
-	static int Fibonacci1(int n) {
+	public static int Fibonacci1(int n) {
 		if (n <= 1) return n;
 		return Fibonacci1(n - 1) + Fibonacci1(n - 2);
 	}
@@ -138,7 +138,7 @@ public class Solution {
 	/**
 	 * 斐波那契数列（动态规划）
 	 */
-	static int Fibonacci2(int n) {
+	public static int Fibonacci2(int n) {
 		int f = 0, g = 1;
 		while (n-- > 0) {
 			g += f;
@@ -150,7 +150,7 @@ public class Solution {
 	/**
 	 * 斐波那契数列（数组动态规划）
 	 */
-	static int Fibonacci3(int n) {
+	public static int Fibonacci3(int n) {
 		if (n <= 1) return n;
 		int[] record = new int[n + 1];
 		record[0] = 0;
@@ -164,7 +164,7 @@ public class Solution {
 	/**
 	 * 跳台阶
 	 */
-	static int JumpFloor(int target) {
+	public static int JumpFloor(int target) {
 		if (target <= 0) return -1;
 		else if (target == 1) return 1;
 		else if (target == 2) return 2;
@@ -174,7 +174,7 @@ public class Solution {
 	/**
 	 * 变态跳台阶
 	 */
-	static int JumpFloorII(int target) {
+	public static int JumpFloorII(int target) {
 		if (target <= 0) return -1;
 		else if (target == 1) return 1;
 		return 2 * JumpFloorII(target - 1);
@@ -183,7 +183,7 @@ public class Solution {
 	/**
 	 * 矩形覆盖
 	 */
-	static int RectCover(int target) {
+	public static int RectCover(int target) {
 		if (target <= 0) return 0;
 		else if (target == 1) return 1;
 		else if (target == 2) return 2;
@@ -193,7 +193,7 @@ public class Solution {
 	/**
 	 * 矩阵中的路径
 	 */
-	static boolean hasPath(char[] matrix, int rows, int cols, char[] str) {
+	public static boolean hasPath(char[] matrix, int rows, int cols, char[] str) {
 		int[] temp = new int[matrix.length]; // 经过的索引
 		for (int i = 0; i < rows; i++) {
 			for (int j = 0; j < cols; j++) {
@@ -205,8 +205,8 @@ public class Solution {
 		return false;
 	}
 
-	static boolean findPath(char[] matrix, int rows, int cols, int i, int j, char[] str, int k,
-			int[] temp) {
+	public static boolean findPath(char[] matrix, int rows, int cols, int i, int j, char[] str,
+			int k, int[] temp) {
 		int index = i * cols + j;
 		if (i < 0 || i >= rows || j < 0 || j >= cols || matrix[index] != str[k]
 				|| temp[index] == 1)
@@ -226,11 +226,12 @@ public class Solution {
 	/**
 	 * 机器人的运动范围
 	 */
-	static int movingCount(int threshold, int rows, int cols) {
+	public static int movingCount(int threshold, int rows, int cols) {
 		return movingCountRec(threshold, rows, cols, 0, 0, new int[rows][cols]);
 	}
 
-	static int movingCountRec(int threshold, int rows, int cols, int i, int j, int[][] temp) {
+	public static int movingCountRec(int threshold, int rows, int cols, int i, int j,
+			int[][] temp) {
 		if (i < 0 || i >= rows || j < 0 || j >= cols || numSum(i) + numSum(j) > threshold
 				|| temp[i][j] == 1) {
 			return 0;
@@ -242,7 +243,7 @@ public class Solution {
 				+ movingCountRec(threshold, rows, cols, i, j - 1, temp);
 	}
 
-	static int numSum(int num) {
+	public static int numSum(int num) {
 		int sum = 0;
 		while (num > 0) {
 			sum += (num % 10);
@@ -256,7 +257,7 @@ public class Solution {
 	/**
 	 * 不用加减乘除做加法
 	 */
-	static int Add(int a, int b) {
+	public static int Add(int a, int b) {
 		if (b == 0) return a;
 		return Add(a ^ b, (a & b) << 1);
 	}
@@ -264,7 +265,7 @@ public class Solution {
 	/**
 	 * 不用加减乘除做减法
 	 */
-	static int Minus(int a, int b) {
+	public static int Minus(int a, int b) {
 		if (b == 0) return a;
 		return Add(a ^ (~b + 1), (a & (~b + 1)) << 1);
 	}
@@ -272,7 +273,7 @@ public class Solution {
 	/**
 	 * 求1+2+3+...+n
 	 */
-	static int Sum_Solution(int n) {
+	public static int Sum_Solution(int n) {
 		int sum = n;
 		boolean ans = n > 0 && (sum += Sum_Solution(n - 1)) > 0;
 		return sum;
@@ -281,7 +282,7 @@ public class Solution {
 	/**
 	 * 读取数据流
 	 */
-	static void Insert(Integer num) {
+	public static void Insert(Integer num) {
 		if (((count++) & 1) == 0) {
 			maxHeap.offer(num);
 			minHeap.offer(maxHeap.poll());
@@ -294,24 +295,25 @@ public class Solution {
 	/**
 	 * 数据流中的中位数
 	 */
-	static Double GetMedian() {
+	public static Double GetMedian() {
 		return (count & 1) == 0 ? (minHeap.peek() + maxHeap.peek()) / 2.0
 				: new Double(minHeap.peek().intValue());
 	}
 
-	static int count;
-	static PriorityQueue<Integer> minHeap = new PriorityQueue<Integer>();
-	static PriorityQueue<Integer> maxHeap = new PriorityQueue<Integer>(new Comparator<Integer>() {
-		@Override
-		public int compare(Integer o1, Integer o2) {
-			return o2.compareTo(o1);
-		}
-	});
+	public static int count;
+	public static PriorityQueue<Integer> minHeap = new PriorityQueue<Integer>();
+	public static PriorityQueue<Integer> maxHeap = new PriorityQueue<Integer>(
+			new Comparator<Integer>() {
+				@Override
+				public int compare(Integer o1, Integer o2) {
+					return o2.compareTo(o1);
+				}
+			});
 
 	/**
 	 * 二进制中1的个数
 	 */
-	static int NumberOf1(int n) {
+	public static int NumberOf1(int n) {
 		if (n == 0) return 0;
 		if ((n & 1) != 0) {
 			return NumberOf1(n >>> 1) + 1;
@@ -324,11 +326,11 @@ public class Solution {
 	/**
 	 * 数字在排序数组中出现的次数
 	 */
-	static int GetNumberOfK(int[] array, int k) {
+	public static int GetNumberOfK(int[] array, int k) {
 		return BinarySearch(array, k + 0.5) - BinarySearch(array, k - 0.5);
 	}
 
-	static int BinarySearch(int[] array, double k) {
+	public static int BinarySearch(int[] array, double k) {
 		int start = 0, end = array.length - 1;
 		while (start <= end) {
 			int mid = (start + end) / 2;
@@ -344,7 +346,7 @@ public class Solution {
 	/**
 	 * 数组中只出现一次的数字
 	 */
-	static void FindNumsAppearOnce(int[] array, int num1[], int num2[]) {
+	public static void FindNumsAppearOnce(int[] array, int num1[], int num2[]) {
 		if (array == null || array.length < 2) return;
 		int temp = 0;
 		for (int i = 0; i < array.length; i++) {
@@ -360,7 +362,7 @@ public class Solution {
 		}
 	}
 
-	static int FindIndexBit(int num) {
+	public static int FindIndexBit(int num) {
 		int indexBit = 0;
 		while (((num & 1) == 0) && (indexBit) < 8 * 4) {
 			num = num >> 1;
@@ -369,7 +371,7 @@ public class Solution {
 		return indexBit;
 	}
 
-	static boolean IsBit(int num, int indexBit) {
+	public static boolean IsBit(int num, int indexBit) {
 		num = num >> indexBit;
 		return (num & 1) == 1;
 	}
@@ -377,7 +379,7 @@ public class Solution {
 	/**
 	 * 顺时针打印矩阵
 	 */
-	static ArrayList<Integer> printMatrix(int[][] matrix) {
+	public static ArrayList<Integer> printMatrix(int[][] matrix) {
 		if (matrix == null || matrix.length == 0) return null;
 		ArrayList<Integer> result = new ArrayList<>();
 		int row = matrix.length, col = matrix[0].length; // 行数，列数
@@ -423,7 +425,7 @@ public class Solution {
 	/**
 	 * 滑动窗口最大值
 	 */
-	static ArrayList<Integer> maxInWindows(int[] num, int size) {
+	public static ArrayList<Integer> maxInWindows(int[] num, int size) {
 		ArrayList<Integer> result = new ArrayList<>();
 		if (size == 0) return result;
 		LinkedList<Integer> queue = new LinkedList<>(); // 存下标
@@ -443,7 +445,7 @@ public class Solution {
 	/**
 	 * 旋转数组的最小数字
 	 */
-	static int minNumberInRotateArray(int[] array) {
+	public static int minNumberInRotateArray(int[] array) {
 		int len = array.length;
 		if (len == 0) return 0;
 		int low = 0, high = len - 1;
@@ -463,7 +465,7 @@ public class Solution {
 	/**
 	 * 数组中重复的数字
 	 */
-	static boolean duplicate(int numbers[], int length, int[] duplication) {
+	public static boolean duplicate(int numbers[], int length, int[] duplication) {
 		for (int i = 0; i < length; i++) {
 			int index = numbers[i];
 			if (index >= length) {
@@ -481,7 +483,7 @@ public class Solution {
 	/**
 	 * 构建乘积数组（N^2）
 	 */
-	static int[] multiply1(int[] A) {
+	public static int[] multiply1(int[] A) {
 		int[] result = new int[A.length];
 		for (int i = 0; i < A.length; i++) {
 			int product = 1;
@@ -498,7 +500,7 @@ public class Solution {
 	/**
 	 * 构建乘积数组（N）
 	 */
-	static int[] multiply2(int[] A) {
+	public static int[] multiply2(int[] A) {
 		int len = A.length;
 		int[] B = new int[len];
 		if (len == 0) return B;
@@ -519,7 +521,7 @@ public class Solution {
 	/**
 	 * 扑克牌顺子
 	 */
-	static boolean isContinuous(int[] numbers) {
+	public static boolean isContinuous(int[] numbers) {
 		if (numbers.length != 5) return false;
 		int[] temp = new int[14]; // 一次性分配桶
 		int max = -1, min = 14;
@@ -538,7 +540,7 @@ public class Solution {
 	/**
 	 * 圆圈中最后剩下的数
 	 */
-	static int LastRemaining_Solution(int n, int m) {
+	public static int LastRemaining_Solution(int n, int m) {
 		int[] array = new int[n]; // 模拟环
 		int index = -1;
 		int count = 0; // 报数
@@ -560,7 +562,7 @@ public class Solution {
 	/**
 	 * 连续子数组的最大和
 	 */
-	static int FindGreatestSumOfSubArray(int[] array) {
+	public static int FindGreatestSumOfSubArray(int[] array) {
 		int max = array[0];
 		int carry = array[0];
 		for (int i = 1; i < array.length; i++) {
@@ -573,7 +575,7 @@ public class Solution {
 	/**
 	 * 最小的K个数（最大堆）
 	 */
-	static ArrayList<Integer> GetLeastNumbers_Solution(int[] input, int k) {
+	public static ArrayList<Integer> GetLeastNumbers_Solution(int[] input, int k) {
 		ArrayList<Integer> result = new ArrayList<>();
 		if (k > input.length || k == 0) return result;
 		PriorityQueue<Integer> queue = new PriorityQueue<>(new Comparator<Integer>() {
@@ -602,7 +604,7 @@ public class Solution {
 	/**
 	 * 最小的K个数（最小堆）
 	 */
-	static ArrayList<Integer> GetLeastNumbers_Solution2(int[] input, int k) {
+	public static ArrayList<Integer> GetLeastNumbers_Solution2(int[] input, int k) {
 		ArrayList<Integer> result = new ArrayList<>();
 		if (k > input.length) return result;
 		PriorityQueue<Integer> queue = new PriorityQueue<>();
@@ -616,7 +618,7 @@ public class Solution {
 	/**
 	 * 数组中的逆序对
 	 */
-	static int InversePairs(int[] array) {
+	public static int InversePairs(int[] array) {
 		int length = array.length;
 		if (length == 0) return 0;
 		int[] copy = new int[length];
@@ -625,7 +627,7 @@ public class Solution {
 		return (int) (InversePairsRec(array, copy, 0, array.length - 1) % 1000000007);
 	}
 
-	static long InversePairsRec(int[] array, int[] copy, int low, int high) {
+	public static long InversePairsRec(int[] array, int[] copy, int low, int high) {
 		if (low == high) return 0;
 		int mid = (low + high) >> 1;
 		long left = InversePairsRec(array, copy, low, mid);
@@ -652,7 +654,7 @@ public class Solution {
 	/**
 	 * 数组中出现次数超过一半的数字
 	 */
-	static int MoreThanHalfNum_Solution(int[] array) {
+	public static int MoreThanHalfNum_Solution(int[] array) {
 		if (array.length == 0) return 0;
 		Arrays.sort(array);
 		int count = 0;
@@ -668,7 +670,7 @@ public class Solution {
 	/**
 	 * 把数组排成最小的数
 	 */
-	static String PrintMinNumber(int[] numbers) {
+	public static String PrintMinNumber(int[] numbers) {
 		ArrayList<Integer> list = new ArrayList<>();
 		for (int i = 0; i < numbers.length; i++) {
 			list.add(numbers[i]);
@@ -691,7 +693,7 @@ public class Solution {
 	/**
 	 * 调整数组顺序使奇数位于偶数前面
 	 */
-	static void reOrderArray(int[] array) {
+	public static void reOrderArray(int[] array) {
 		if (array == null || array.length == 0) return;
 		int i = 0, j = 0;
 		while (i < array.length) {
@@ -717,7 +719,7 @@ public class Solution {
 	/**
 	 * 和为S的两个数字
 	 */
-	static ArrayList<Integer> FindNumbersWithSum(int[] array, int sum) {
+	public static ArrayList<Integer> FindNumbersWithSum(int[] array, int sum) {
 		ArrayList<Integer> result = new ArrayList<>();
 		int i = 0, j = array.length - 1;
 		while (i < j) {
@@ -737,7 +739,7 @@ public class Solution {
 	/**
 	 * 和为S的连续正数序列
 	 */
-	static ArrayList<ArrayList<Integer>> FindContinuousSequence(int sum) {
+	public static ArrayList<ArrayList<Integer>> FindContinuousSequence(int sum) {
 		ArrayList<ArrayList<Integer>> result = new ArrayList<>();
 		int low = 1, high = 2;
 		while (low < high) {
@@ -763,9 +765,9 @@ public class Solution {
 	/**
 	 * 翻转单词顺序列（递归）
 	 */
-	static ArrayList<Integer> result = new ArrayList<>();
+	public static ArrayList<Integer> result = new ArrayList<>();
 
-	static ArrayList<Integer> printListFromTailToHead1(ListNode listNode) {
+	public static ArrayList<Integer> printListFromTailToHead1(ListNode listNode) {
 		if (listNode != null) {
 			printListFromTailToHead1(listNode.next);
 			result.add(listNode.val);
@@ -776,7 +778,7 @@ public class Solution {
 	/**
 	 * 翻转单词顺序列（栈）
 	 */
-	static ArrayList<Integer> printListFromTailToHead2(ListNode listNode) {
+	public static ArrayList<Integer> printListFromTailToHead2(ListNode listNode) {
 		ArrayList<Integer> result = new ArrayList<>();
 		Stack<Integer> stack = new Stack<>();
 		while (listNode != null) {
@@ -792,7 +794,7 @@ public class Solution {
 	/**
 	 * 删除链表中的重复节点
 	 */
-	static ListNode deleteDuplication(ListNode pHead) {
+	public static ListNode deleteDuplication(ListNode pHead) {
 		if (pHead == null || pHead.next == null) return pHead;
 		if (pHead.val == pHead.next.val) {
 			ListNode next = pHead.next;
@@ -809,7 +811,7 @@ public class Solution {
 	/**
 	 * 链表中检测是否有环
 	 */
-	static Boolean IsLoop(ListNode pHead) {
+	public static Boolean IsLoop(ListNode pHead) {
 		if (pHead == null || pHead.next == null) return false;
 		ListNode p1 = pHead;
 		ListNode p2 = pHead;
@@ -826,7 +828,7 @@ public class Solution {
 	/**
 	 * 链表中环的入口节点
 	 */
-	static ListNode EntryNodeOfLoop(ListNode pHead) {
+	public static ListNode EntryNodeOfLoop(ListNode pHead) {
 		if (pHead == null || pHead.next == null) return null;
 		ListNode p1 = pHead;
 		ListNode p2 = pHead;
@@ -848,14 +850,14 @@ public class Solution {
 	/**
 	 * 用两个栈实现队列
 	 */
-	static Stack<Integer> stack1 = new Stack<Integer>();
-	static Stack<Integer> stack2 = new Stack<Integer>(); // 辅助栈
+	public static Stack<Integer> stack1 = new Stack<Integer>();
+	public static Stack<Integer> stack2 = new Stack<Integer>(); // 辅助栈
 
-	static void push(int node) {
+	public static void push(int node) {
 		stack1.push(node);
 	}
 
-	static int pop() {
+	public static int pop() {
 		if (stack2.isEmpty()) {
 			while (!stack1.isEmpty()) {
 				stack2.push(stack1.pop());
@@ -867,7 +869,7 @@ public class Solution {
 	/**
 	 * 两个链表的第一个公共结点
 	 */
-	static ListNode FindFirstCommonNode(ListNode pHead1, ListNode pHead2) {
+	public static ListNode FindFirstCommonNode(ListNode pHead1, ListNode pHead2) {
 		ListNode p1 = pHead1;
 		ListNode p2 = pHead2;
 		while (p1 != p2) {
@@ -880,7 +882,7 @@ public class Solution {
 	/**
 	 * 链表中倒数第k个结点
 	 */
-	static ListNode FindKthToTail(ListNode head, int k) {
+	public static ListNode FindKthToTail(ListNode head, int k) {
 		if (head == null || k == 0) return null;
 		ListNode temp = head;
 		while (--k > 0) {
@@ -897,7 +899,7 @@ public class Solution {
 	/**
 	 * 合并两个排序的链表
 	 */
-	static ListNode Merge(ListNode list1, ListNode list2) {
+	public static ListNode Merge(ListNode list1, ListNode list2) {
 		if (list1 == null) return list2;
 		if (list2 == null) return list1;
 		ListNode head = null;
@@ -929,7 +931,7 @@ public class Solution {
 	/**
 	 * 反转链表
 	 */
-	static ListNode ReverseList(ListNode head) {
+	public static ListNode ReverseList(ListNode head) {
 		if (head == null) return null;
 		ListNode prev = null;
 		ListNode next = null;
@@ -945,7 +947,7 @@ public class Solution {
 	/**
 	 * 复杂链表的复制
 	 */
-	static RandomListNode Clone(RandomListNode pHead) {
+	public static RandomListNode Clone(RandomListNode pHead) {
 		if (pHead == null) return null;
 		RandomListNode current = pHead;
 		while (current != null) {
@@ -976,7 +978,7 @@ public class Solution {
 	/**
 	 * 第一个只出现一次的字符
 	 */
-	static int FirstNotRepeatingChar(String str) {
+	public static int FirstNotRepeatingChar(String str) {
 		Map<Character, Integer> map = new LinkedHashMap<>(16, 0.75f, true);
 		for (int i = str.length() - 1; i >= 0; i--) {
 			if (map.get(str.charAt(i)) == null) {
@@ -994,7 +996,7 @@ public class Solution {
 	/**
 	 * 翻转单词顺序列
 	 */
-	static String ReverseSentence(String str) {
+	public static String ReverseSentence(String str) {
 		if (str == null || str.length() == 0) {
 			return "";
 		}
@@ -1022,7 +1024,7 @@ public class Solution {
 	/**
 	 * 把字符串转换成整数
 	 */
-	static int StrToInt(String str) {
+	public static int StrToInt(String str) {
 		if (str == null || str.length() == 0) return 0;
 		int result = 0, start = 0;
 		char[] cs = str.trim().toCharArray();
@@ -1041,7 +1043,7 @@ public class Solution {
 	/**
 	 * 左旋转字符串
 	 */
-	static String LeftRotateString(String str, int n) {
+	public static String LeftRotateString(String str, int n) {
 		int len = str.length();
 		if (len == 0) return "";
 		n = n % len;
@@ -1052,7 +1054,7 @@ public class Solution {
 	/**
 	 * 替换空格
 	 */
-	static String replaceSpace(StringBuffer str) {
+	public static String replaceSpace(StringBuffer str) {
 		char[] dst = new char[str.length()];
 		str.getChars(0, str.length(), dst, 0);
 		for (int i = dst.length - 1; i >= 0; i--) {
@@ -1066,15 +1068,15 @@ public class Solution {
 	/**
 	 * 字符流中第一个不重复的字符
 	 */
-	static StringBuffer stringBuffer = new StringBuffer();
-	static int[] hash = new int[256];
+	public static StringBuffer stringBuffer = new StringBuffer();
+	public static int[] hash = new int[256];
 
-	static void Insert(char ch) {
+	public static void Insert(char ch) {
 		stringBuffer.append(ch);
 		hash[ch]++;
 	}
 
-	static char FirstAppearingOnce() {
+	public static char FirstAppearingOnce() {
 		char[] str = stringBuffer.toString().toCharArray();
 		for (char c : str) {
 			if (hash[c] == 1) return c;
@@ -1085,7 +1087,7 @@ public class Solution {
 	/**
 	 * 表示数值的字符串
 	 */
-	static boolean isNumeric(char[] str) {
+	public static boolean isNumeric(char[] str) {
 		boolean sign = false, decimal = false, hasE = false;
 		int len = str.length;
 		for (int i = 0; i < len; i++) {
@@ -1144,7 +1146,7 @@ public class Solution {
 	/**
 	 * 二叉树的深度
 	 */
-	static int TreeDepth(TreeNode root) {
+	public static int TreeDepth(TreeNode root) {
 		if (root == null) return 0;
 		return Math.max(TreeDepth(root.left), TreeDepth(root.right)) + 1;
 	}
@@ -1152,7 +1154,7 @@ public class Solution {
 	/**
 	 * 平衡二叉树1
 	 */
-	static boolean IsBalanced_Solution1(TreeNode root) {
+	public static boolean IsBalanced_Solution1(TreeNode root) {
 		if (root == null) return true;
 		return (Math.abs(TreeDepth(root.left) - TreeDepth(root.right)) <= 1)
 				&& (IsBalanced_Solution1(root.left) && IsBalanced_Solution1(root.right));
@@ -1161,11 +1163,11 @@ public class Solution {
 	/**
 	 * 平衡二叉树2
 	 */
-	static boolean IsBalanced_Solution2(TreeNode root) {
+	public static boolean IsBalanced_Solution2(TreeNode root) {
 		return getDepth(root) != -1;
 	}
 
-	static int getDepth(TreeNode root) {
+	public static int getDepth(TreeNode root) {
 		if (root == null) return 0;
 		int leftDepth = getDepth(root.left);
 		if (leftDepth == -1) return -1;
@@ -1177,7 +1179,7 @@ public class Solution {
 	/**
 	 * 二叉树的下一个结点
 	 */
-	static TreeLinkNode GetNext(TreeLinkNode node) {
+	public static TreeLinkNode GetNext(TreeLinkNode node) {
 		if (node == null) return null;
 		if (node.right != null) {
 			node = node.right;
@@ -1196,12 +1198,12 @@ public class Solution {
 	/**
 	 * 对称的二叉树
 	 */
-	static boolean isSymmetrical(TreeNode root) {
+	public static boolean isSymmetrical(TreeNode root) {
 		if (root == null) return true;
 		return symmetricTree(root.left, root.right);
 	}
 
-	static boolean symmetricTree(TreeNode left, TreeNode right) {
+	public static boolean symmetricTree(TreeNode left, TreeNode right) {
 		if (left == null) return right == null;
 		if (right == null) return false;
 		return left.val == right.val && symmetricTree(left.left, right.right)
@@ -1211,7 +1213,7 @@ public class Solution {
 	/**
 	 * 二叉树的镜像
 	 */
-	static void Mirror(TreeNode root) {
+	public static void Mirror(TreeNode root) {
 		if (root == null) return;
 		TreeNode temp = root.right;
 		root.right = root.left;
@@ -1223,13 +1225,13 @@ public class Solution {
 	/**
 	 * 把二叉树打印成多行（递归）
 	 */
-	static ArrayList<ArrayList<Integer>> Print(TreeNode pRoot) {
+	public static ArrayList<ArrayList<Integer>> Print(TreeNode pRoot) {
 		ArrayList<ArrayList<Integer>> result = new ArrayList<>();
 		Print(pRoot, 1, result);
 		return result;
 	}
 
-	static void Print(TreeNode pRoot, int depth, ArrayList<ArrayList<Integer>> result) {
+	public static void Print(TreeNode pRoot, int depth, ArrayList<ArrayList<Integer>> result) {
 		if (pRoot == null) return;
 		if (depth > result.size()) result.add(new ArrayList<Integer>());
 		result.get(depth - 1).add(pRoot.val);
@@ -1240,7 +1242,7 @@ public class Solution {
 	/**
 	 * 按之字形顺序打印二叉树
 	 */
-	static ArrayList<ArrayList<Integer>> ReversedPrint(TreeNode pRoot) {
+	public static ArrayList<ArrayList<Integer>> ReversedPrint(TreeNode pRoot) {
 		ArrayList<ArrayList<Integer>> result = new ArrayList<>();
 		Stack<TreeNode> s1 = new Stack<>();
 		Stack<TreeNode> s2 = new Stack<>();
@@ -1283,7 +1285,7 @@ public class Solution {
 	/**
 	 * 序列化二叉树
 	 */
-	static String Serialize(TreeNode root) {
+	public static String Serialize(TreeNode root) {
 		StringBuilder stringBuilder = new StringBuilder();
 		if (root == null) {
 			stringBuilder.append("#,");
@@ -1298,7 +1300,7 @@ public class Solution {
 	/**
 	 * 反序列化二叉树
 	 */
-	static TreeNode Deserialize(String str) {
+	public static TreeNode Deserialize(String str) {
 		String[] array = str.split(",");
 		TreeNode node = null;
 		index++;
@@ -1310,12 +1312,12 @@ public class Solution {
 		return node;
 	}
 
-	static int index = -1;
+	public static int index = -1;
 
 	/**
 	 * 二叉搜索树的第k个节点
 	 */
-	static TreeNode KthNode(TreeNode pRoot, int k) {
+	public static TreeNode KthNode(TreeNode pRoot, int k) {
 		if (pRoot != null) {
 			TreeNode temp = KthNode(pRoot.left, k);
 			if (temp != null) return temp;
@@ -1325,16 +1327,16 @@ public class Solution {
 		return null;
 	}
 
-	static int acc;
+	public static int acc;
 
 	/**
 	 * 重建二叉树
 	 */
-	static TreeNode ReconstructBinaryTree(int[] pre, int[] in) {
+	public static TreeNode ReconstructBinaryTree(int[] pre, int[] in) {
 		return ReconstructBinaryTree(pre, 0, pre.length - 1, in, 0, in.length - 1);
 	}
 
-	static TreeNode ReconstructBinaryTree(int[] pre, int preStart, int preEnd, int[] in,
+	public static TreeNode ReconstructBinaryTree(int[] pre, int preStart, int preEnd, int[] in,
 			int inStart, int inEnd) {
 		if (preStart > preEnd || inStart > inEnd) return null;
 		TreeNode root = new TreeNode(pre[preStart]);
@@ -1354,9 +1356,9 @@ public class Solution {
 	/**
 	 * 二叉搜索树与双向链表
 	 */
-	static TreeNode leftLast = null;
+	public static TreeNode leftLast = null;
 
-	static TreeNode Convert(TreeNode pRootOfTree) {
+	public static TreeNode Convert(TreeNode pRootOfTree) {
 		if (pRootOfTree == null) {
 			return null;
 		}
@@ -1381,13 +1383,13 @@ public class Solution {
 	/**
 	 * 树的子结构
 	 */
-	static boolean HasSubtree(TreeNode root1, TreeNode root2) {
+	public static boolean HasSubtree(TreeNode root1, TreeNode root2) {
 		if (root1 == null || root2 == null) return false;
 		return isSubtree(root1, root2) || HasSubtree(root1.left, root2)
 				|| HasSubtree(root1.right, root2);
 	}
 
-	static boolean isSubtree(TreeNode root1, TreeNode root2) {
+	public static boolean isSubtree(TreeNode root1, TreeNode root2) {
 		if (root2 == null) return true;
 		if (root1 == null) return false;
 		if (root1.val == root2.val)
@@ -1400,7 +1402,7 @@ public class Solution {
 	/**
 	 * 树节点1
 	 */
-	static class TreeNode {
+	private static class TreeNode {
 		int val = 0;
 		TreeNode left = null;
 		TreeNode right = null;
@@ -1413,7 +1415,7 @@ public class Solution {
 	/**
 	 * 树节点2
 	 */
-	static class TreeLinkNode {
+	private static class TreeLinkNode {
 		int val;
 		TreeLinkNode left = null;
 		TreeLinkNode right = null;
@@ -1427,7 +1429,7 @@ public class Solution {
 	/**
 	 * 链表节点
 	 */
-	static class ListNode {
+	private static class ListNode {
 		int val;
 		ListNode next = null;
 
@@ -1439,7 +1441,7 @@ public class Solution {
 	/**
 	 * 随机链表节点
 	 */
-	static class RandomListNode {
+	private static class RandomListNode {
 		int label;
 		RandomListNode next = null;
 		RandomListNode random = null;
@@ -1451,7 +1453,7 @@ public class Solution {
 
 	/******************** 辅助方法 ********************/
 
-	static void SquareSort(int[] array) {
+	public static void SquareSort(int[] array) {
 		for (int i = 1; i < array.length; i++) {
 			for (int j = i; j > 0 && array[j] < array[j - 1]; j--) {
 				int temp = array[j];
@@ -1460,5 +1462,4 @@ public class Solution {
 			}
 		}
 	}
-
 }
