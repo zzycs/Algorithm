@@ -11,8 +11,21 @@ public class Algorithm_Tree {
 	public static void main(String[] args) {
 		String[] array = new String[] { "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l",
 				"m", "n", "o", "p", "q" };
-		Node_Tree tree = array2tree(array, 0);
+		TreeNode tree = array2tree(array, 0);
 		reversedTraversal(tree);
+	}
+
+	/******************** 二叉树 ********************/
+
+	/**
+	 * 二叉树中两个节点的最近公共祖先节点
+	 */
+	static TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
+		if (root == null || root == p || root == q) return root;
+		TreeNode left = lowestCommonAncestor(root.left, p, q);
+		TreeNode right = lowestCommonAncestor(root.right, p, q);
+		if (left != null && right != null) return root;
+		return left != null ? left : right;
 	}
 
 	/******************** 树的遍历 ********************/
@@ -20,7 +33,7 @@ public class Algorithm_Tree {
 	/**
 	 * 前序遍历（递归）
 	 */
-	public static void preorderRecursion(Node_Tree node) {
+	static void preorderRecursion(TreeNode node) {
 		if (node == null) return;
 		System.out.print(node.value);
 		preorderRecursion(node.left);
@@ -30,7 +43,7 @@ public class Algorithm_Tree {
 	/**
 	 * 中序遍历（递归）
 	 */
-	public static void inorderRecursion(Node_Tree node) {
+	static void inorderRecursion(TreeNode node) {
 		if (node == null) return;
 		inorderRecursion(node.left);
 		System.out.print(node.value);
@@ -40,7 +53,7 @@ public class Algorithm_Tree {
 	/**
 	 * 后序递归（递归）
 	 */
-	public static void postorderRecursion(Node_Tree node) {
+	static void postorderRecursion(TreeNode node) {
 		if (node == null) return;
 		postorderRecursion(node.left);
 		postorderRecursion(node.right);
@@ -50,9 +63,9 @@ public class Algorithm_Tree {
 	/**
 	 * 前序遍历（非递归）
 	 */
-	public static void preorderTraversal(Node_Tree node) {
+	static void preorderTraversal(TreeNode node) {
 		if (node == null) return;
-		Stack<Node_Tree> stack = new Stack<>();
+		Stack<TreeNode> stack = new Stack<>();
 		while (node != null || !stack.isEmpty()) {
 			while (node != null) {
 				System.out.print(node.value);
@@ -67,9 +80,9 @@ public class Algorithm_Tree {
 	/**
 	 * 中序遍历
 	 */
-	public static void inorderTraversal(Node_Tree node) {
+	static void inorderTraversal(TreeNode node) {
 		if (node == null) return;
-		Stack<Node_Tree> stack = new Stack<>();
+		Stack<TreeNode> stack = new Stack<>();
 		while (node != null || !stack.isEmpty()) {
 			while (node != null) {
 				stack.push(node);
@@ -84,10 +97,10 @@ public class Algorithm_Tree {
 	/**
 	 * 后序遍历
 	 */
-	public static void postorderTraversal(Node_Tree node) {
+	static void postorderTraversal(TreeNode node) {
 		if (node == null) return;
-		Stack<Node_Tree> stack = new Stack<>();
-		Map<Node_Tree, Boolean> map = new HashMap<>();
+		Stack<TreeNode> stack = new Stack<>();
+		Map<TreeNode, Boolean> map = new HashMap<>();
 		stack.push(node);
 		while (!stack.isEmpty()) {
 			node = stack.peek();
@@ -111,9 +124,9 @@ public class Algorithm_Tree {
 	/**
 	 * 层序遍历
 	 */
-	public static void levelTraversal(Node_Tree node) {
+	static void levelTraversal(TreeNode node) {
 		if (node == null) return;
-		Queue<Node_Tree> queue = new LinkedList<>();
+		Queue<TreeNode> queue = new LinkedList<>();
 		queue.add(node);
 		while (!queue.isEmpty()) {
 			node = queue.poll();
@@ -126,9 +139,9 @@ public class Algorithm_Tree {
 	/**
 	 * 之字形顺序遍历
 	 */
-	public static void reversedTraversal(Node_Tree node) {
-		Stack<Node_Tree> s1 = new Stack<>();
-		Stack<Node_Tree> s2 = new Stack<>();
+	static void reversedTraversal(TreeNode node) {
+		Stack<TreeNode> s1 = new Stack<>();
+		Stack<TreeNode> s2 = new Stack<>();
 		int layer = 1;
 		s1.push(node);
 		while (!s1.isEmpty() || !s2.isEmpty()) {
@@ -173,9 +186,9 @@ public class Algorithm_Tree {
 	/**
 	 * 数组构建完全二叉树
 	 */
-	public static Node_Tree array2tree(String[] input, int start) {
+	static TreeNode array2tree(String[] input, int start) {
 		if (start >= input.length) return null;
-		Node_Tree node = new Node_Tree(start, input[start]);
+		TreeNode node = new TreeNode(start, input[start]);
 		node.left = array2tree(input, 2 * start + 1);
 		node.right = array2tree(input, 2 * start + 2);
 		return node;
@@ -184,15 +197,15 @@ public class Algorithm_Tree {
 	/**
 	 * 字符串构建二叉树1，e.g. 4(2(3)(1))(6(5))
 	 */
-	public static Node_Tree string2tree1(String input) {
+	static TreeNode string2tree1(String input) {
 		if (input == null || input.length() == 0) return null;
 		int firstIndex = input.indexOf("(");
-		Node_Tree root;
+		TreeNode root;
 		if (firstIndex == -1) {
-			root = new Node_Tree(Integer.parseInt(input));
+			root = new TreeNode(Integer.parseInt(input));
 			return root;
 		} else {
-			root = new Node_Tree(Integer.parseInt(input.substring(0, firstIndex)));
+			root = new TreeNode(Integer.parseInt(input.substring(0, firstIndex)));
 		}
 		int start = firstIndex, count = 0;
 		for (int i = start; i < input.length(); i++) {
@@ -213,15 +226,15 @@ public class Algorithm_Tree {
 	/**
 	 * 字符串构建二叉树2，e.g. 1(2(3,4(,5)),6(7,))
 	 */
-	public static Node_Tree string2tree2(String input) {
+	static TreeNode string2tree2(String input) {
 		if (input == null || input.length() == 0) return null;
 		int firstIndex = input.indexOf("(");
-		Node_Tree root;
+		TreeNode root;
 		if (firstIndex == -1) {
-			root = new Node_Tree(Integer.parseInt(input));
+			root = new TreeNode(Integer.parseInt(input));
 			return root;
 		} else {
-			root = new Node_Tree(Integer.parseInt(input.substring(0, firstIndex)));
+			root = new TreeNode(Integer.parseInt(input.substring(0, firstIndex)));
 		}
 		int start = firstIndex;
 		int count = 0;
@@ -245,41 +258,18 @@ public class Algorithm_Tree {
 /**
  * 树节点类（键为int，值为String）
  */
-class Node_Tree {
+class TreeNode {
 
 	int key;
 	String value;
-	Node_Tree left, right;
+	TreeNode left, right;
 
-	Node_Tree(int key) {
+	TreeNode(int key) {
 		this.key = key;
 	}
 
-	Node_Tree(int key, String value) {
+	TreeNode(int key, String value) {
 		this.key = key;
 		this.value = value;
-	}
-}
-
-/**
- * 红黑树节点类
- */
-class Node_RedBlack_Tree {
-
-	int key;
-	String value;
-	Node_RedBlack_Tree left, right;
-	boolean color; // 非红即黑
-
-	Node_RedBlack_Tree(int key, String value) {
-		this.key = key;
-		this.value = value;
-		this.color = false; // 默认为黑
-	}
-
-	Node_RedBlack_Tree(int key, String value, boolean color) {
-		this.key = key;
-		this.value = value;
-		this.color = color;
 	}
 }
