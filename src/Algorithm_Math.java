@@ -16,6 +16,26 @@ public class Algorithm_Math {
 
 	/******************** 区间合并问题 ********************/
 
+	/**
+	 * 合并区间
+	 */
+	static int[][] mergeInterval(int[][] intervals) {
+		// 按起点升序
+		Arrays.sort(intervals, (a1, a2) -> Integer.compare(a1[0], a2[0]));
+		ArrayList<int[]> result = new ArrayList<>();
+		int[] temp = intervals[0];
+		result.add(temp);
+		for (int[] interval : intervals) {
+			if (interval[0] <= temp[1]) // 区间重叠，终点取最大
+				temp[1] = Math.max(temp[1], interval[1]);
+			else { // 区间不重叠，加入新的区间
+				temp = interval;
+				result.add(temp);
+			}
+		}
+		return result.toArray(new int[result.size()][]);
+	}
+
 	/******************** 硬币找零问题 ********************/
 
 	/**
