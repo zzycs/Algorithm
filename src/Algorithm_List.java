@@ -6,19 +6,37 @@
  */
 public class Algorithm_List {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) {}
 
+	/******************** 链表的排序 ********************/
+
+	/**
+	 * 归并排序
+	 */
+	static ListNode mergeSort(ListNode head) {
+		ListNode prev = null, slow = head, fast = head;
+		while (fast != null && fast.next != null) {
+			prev = slow;
+			slow = slow.next;
+			head = head.next.next;
+		}
+		prev.next = null;
+		ListNode p1 = mergeSort(head);
+		ListNode p2 = mergeSort(slow);
+		return merge(p1, p2);
 	}
+
+	/******************** 链表的查找 ********************/
 
 	/**
 	 * 两个链表的第一个公共结点
 	 */
-	public static Node_List FindFirstCommonNode(Node_List pHead1, Node_List pHead2) {
-		Node_List p1 = pHead1;
-		Node_List p2 = pHead2;
+	static ListNode findFirstCommonNode(ListNode head1, ListNode head2) {
+		ListNode p1 = head1;
+		ListNode p2 = head2;
 		while (p1 != p2) {
-			p1 = p1 == null ? pHead1 : p1.next;
-			p2 = p2 == null ? pHead2 : p2.next;
+			p1 = p1 == null ? head1 : p1.next;
+			p2 = p2 == null ? head2 : p2.next;
 		}
 		return p1;
 	}
@@ -26,9 +44,9 @@ public class Algorithm_List {
 	/**
 	 * 链表中倒数第k个结点
 	 */
-	public static Node_List FindKthToTail(Node_List head, int k) {
+	static ListNode findKthToTail(ListNode head, int k) {
 		if (head == null || k == 0) return null;
-		Node_List temp = head;
+		ListNode temp = head;
 		while (--k > 0) {
 			if (temp.next == null) return null;
 			temp = temp.next;
@@ -40,14 +58,16 @@ public class Algorithm_List {
 		return head;
 	}
 
+	/******************** 链表的合并 ********************/
+
 	/**
 	 * 合并两个排序的链表
 	 */
-	public static Node_List Merge(Node_List list1, Node_List list2) {
+	static ListNode merge(ListNode list1, ListNode list2) {
 		if (list1 == null) return list2;
 		if (list2 == null) return list1;
-		Node_List head = null;
-		Node_List temp = null;
+		ListNode head = null;
+		ListNode temp = null;
 		while (list1 != null && list2 != null) {
 			if (list1.value < list2.value) {
 				if (head == null) {
@@ -72,13 +92,15 @@ public class Algorithm_List {
 		return head;
 	}
 
+	/******************** 链表的反转 ********************/
+
 	/**
 	 * 反转链表
 	 */
-	public static Node_List ReverseList(Node_List head) {
+	static ListNode reverseList(ListNode head) {
 		if (head == null) return null;
-		Node_List prev = null;
-		Node_List next = null;
+		ListNode prev = null;
+		ListNode next = null;
 		while (head != null) {
 			next = head.next;
 			head.next = prev;
@@ -88,13 +110,15 @@ public class Algorithm_List {
 		return prev;
 	}
 
+	/******************** 链表的环 ********************/
+
 	/**
 	 * 链表中检测是否有环
 	 */
-	public static Boolean IsLoop(Node_List pHead) {
-		if (pHead == null || pHead.next == null) return false;
-		Node_List p1 = pHead;
-		Node_List p2 = pHead;
+	static Boolean isLoop(ListNode head) {
+		if (head == null || head.next == null) return false;
+		ListNode p1 = head;
+		ListNode p2 = head;
 		while (p2 != null && p2.next != null) {
 			p1 = p1.next;
 			p2 = p2.next.next;
@@ -108,15 +132,15 @@ public class Algorithm_List {
 	/**
 	 * 链表中环的入口节点
 	 */
-	public static Node_List EntryNodeOfLoop(Node_List pHead) {
-		if (pHead == null || pHead.next == null) return null;
-		Node_List p1 = pHead;
-		Node_List p2 = pHead;
+	static ListNode findEntryNodeOfLoop(ListNode head) {
+		if (head == null || head.next == null) return null;
+		ListNode p1 = head;
+		ListNode p2 = head;
 		while (p2 != null && p2.next != null) {
 			p1 = p1.next;
 			p2 = p2.next.next;
 			if (p1 == p2) {
-				p1 = pHead;
+				p1 = head;
 				while (p1 != p2) {
 					p1 = p1.next;
 					p2 = p2.next;
@@ -126,7 +150,6 @@ public class Algorithm_List {
 		}
 		return null;
 	}
-
 }
 
 /******************** 辅助类 ********************/
@@ -134,11 +157,11 @@ public class Algorithm_List {
 /**
  * 链表节点
  */
-class Node_List {
+class ListNode {
 	int value;
-	Node_List next;
+	ListNode next;
 
-	Node_List(int value) {
+	ListNode(int value) {
 		this.value = value;
 	}
 }
