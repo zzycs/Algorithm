@@ -8,7 +8,7 @@ public class Algorithm_List {
 
 	public static void main(String[] args) {}
 
-	/******************** 链表的排序 ********************/
+	/******************** 排序 ********************/
 
 	/**
 	 * 归并排序
@@ -26,39 +26,7 @@ public class Algorithm_List {
 		return merge(p1, p2);
 	}
 
-	/******************** 链表的查找 ********************/
-
-	/**
-	 * 两个链表的第一个公共结点
-	 */
-	static ListNode findFirstCommonNode(ListNode head1, ListNode head2) {
-		ListNode p1 = head1;
-		ListNode p2 = head2;
-		while (p1 != p2) {
-			p1 = p1 == null ? head1 : p1.next;
-			p2 = p2 == null ? head2 : p2.next;
-		}
-		return p1;
-	}
-
-	/**
-	 * 链表中倒数第k个结点
-	 */
-	static ListNode findKthToTail(ListNode head, int k) {
-		if (head == null || k == 0) return null;
-		ListNode temp = head;
-		while (--k > 0) {
-			if (temp.next == null) return null;
-			temp = temp.next;
-		}
-		while (temp.next != null) {
-			temp = temp.next;
-			head = head.next;
-		}
-		return head;
-	}
-
-	/******************** 链表的合并 ********************/
+	/******************** 合并 ********************/
 
 	/**
 	 * 合并两个排序的链表
@@ -92,7 +60,39 @@ public class Algorithm_List {
 		return head;
 	}
 
-	/******************** 链表的反转 ********************/
+	/******************** 查找 ********************/
+
+	/**
+	 * 两个链表的第一个公共结点
+	 */
+	static ListNode findFirstCommonNode(ListNode head1, ListNode head2) {
+		ListNode p1 = head1;
+		ListNode p2 = head2;
+		while (p1 != p2) {
+			p1 = p1 == null ? head1 : p1.next;
+			p2 = p2 == null ? head2 : p2.next;
+		}
+		return p1;
+	}
+
+	/**
+	 * 链表中倒数第k个结点
+	 */
+	static ListNode findKthToTail(ListNode head, int k) {
+		if (head == null || k == 0) return null;
+		ListNode temp = head;
+		while (--k > 0) {
+			if (temp.next == null) return null;
+			temp = temp.next;
+		}
+		while (temp.next != null) {
+			temp = temp.next;
+			head = head.next;
+		}
+		return head;
+	}
+
+	/******************** 反转 ********************/
 
 	/**
 	 * 反转链表
@@ -110,7 +110,7 @@ public class Algorithm_List {
 		return prev;
 	}
 
-	/******************** 链表的环 ********************/
+	/******************** 环 ********************/
 
 	/**
 	 * 链表中检测是否有环
