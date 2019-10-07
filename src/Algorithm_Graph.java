@@ -18,24 +18,7 @@ public class Algorithm_Graph {
 		int[][] adjMatrix = edgeList2adjMatrix(edges, vertices);
 		printIntMatrix(adjMatrix);
 		double[][] distMatrix = weightedEdgeList2distMatrix(weightedEdges, vertices);
-		// 最短路径问题
-		double[][] shortestPath = new double[vertices][vertices];
-		for (int i = 0; i < vertices; i++) {
-			shortestPath[i] = Dijkstra(i, distMatrix);
-		}
-		printDoubleMatrix(shortestPath);
-		for (int i = 0; i < vertices; i++) {
-			shortestPath[i] = BellmanFord(i, distMatrix);
-		}
-		printDoubleMatrix(shortestPath);
-		shortestPath = FloydWarshall(distMatrix);
-		printDoubleMatrix(shortestPath);
-		// 最小生成树
-		double[][] miniSpanTree = new double[vertices][vertices];
-		miniSpanTree = Prim(0, distMatrix);
-		printDoubleMatrix(miniSpanTree);
-		miniSpanTree = Kruskal(0, distMatrix);
-		printDoubleMatrix(miniSpanTree);
+		printDoubleMatrix(distMatrix);
 	}
 
 	/******************** 旅行商问题（遍历完所有的点而可以重复） ********************/
@@ -49,7 +32,7 @@ public class Algorithm_Graph {
 	/**
 	 * 普里姆算法
 	 */
-	public static double[][] Prim(int start, double[][] distMatrix) {
+	static double[][] Prim(int start, double[][] distMatrix) {
 		ArrayList<Integer> closed = new ArrayList<>(); // 已访问的节点
 		closed.add(start);
 		double[][] miniSpanTree = new double[vertices][vertices]; // 最小生成树
@@ -78,7 +61,7 @@ public class Algorithm_Graph {
 	/**
 	 * 克鲁斯克尔算法
 	 */
-	public static double[][] Kruskal(int start, double[][] distMatrix) {
+	static double[][] Kruskal(int start, double[][] distMatrix) {
 		double[][] miniSpanTree = new double[vertices][vertices]; // 最小生成树
 		for (int[] edge : getSortedEdge(weightedEdges)) { // 把边按权重排序取出
 			int u = edge[0];
@@ -96,7 +79,7 @@ public class Algorithm_Graph {
 	/**
 	 * 广度优先搜索
 	 */
-	public static void BFS(int n, int[][] adjMatrix) {
+	static void BFS(int n, int[][] adjMatrix) {
 		Queue<Integer> queue = new LinkedList<>();
 		queue.add(n);
 		boolean[] closed = new boolean[vertices];
@@ -116,7 +99,7 @@ public class Algorithm_Graph {
 	/**
 	 * 深度优先搜索
 	 */
-	public static void DFS1(int n, int[][] adjMatrix) {
+	static void DFS1(int n, int[][] adjMatrix) {
 		Stack<Integer> stack = new Stack<>();
 		stack.add(n);
 		boolean[] closed = new boolean[vertices];
@@ -136,7 +119,7 @@ public class Algorithm_Graph {
 	/**
 	 * 深度优先搜索（递归）
 	 */
-	public static void DFS2(int n, int[][] adjMatrix) {
+	static void DFS2(int n, int[][] adjMatrix) {
 		boolean[] visited = new boolean[vertices];
 		DFSRecusion(n, adjMatrix, visited);
 	}
@@ -144,7 +127,7 @@ public class Algorithm_Graph {
 	/**
 	 * 深度优先搜索（递归）
 	 */
-	public static void DFSRecusion(int n, int[][] adjMatrix, boolean[] visited) {
+	static void DFSRecusion(int n, int[][] adjMatrix, boolean[] visited) {
 		visited[n] = true;
 		System.out.print(n + " ");
 		for (int k = 0; k < vertices; k++) {
@@ -159,7 +142,7 @@ public class Algorithm_Graph {
 	/**
 	 * 迪杰斯特拉算法（从起点到任意一点的最短路径）
 	 */
-	public static double[] Dijkstra(int start, double[][] distMatrix) {
+	static double[] Dijkstra(int start, double[][] distMatrix) {
 		double[] distance = new double[vertices]; // 从起点到各个节点的距离
 		for (int k = 0; k < vertices; k++) {
 			if (k == start) distance[k] = 0;
@@ -170,7 +153,7 @@ public class Algorithm_Graph {
 			// 找出距离当前节点最近的节点 u
 			double min = Double.MAX_VALUE;
 			int u = -1; // 目标节点 u 的索引
-			for (int j = 0; j < distance.length; j++) {
+			for (int j = 0; j < vertices; j++) {
 				if (!closed[j] && distance[j] < min) {
 					min = distance[j];
 					u = j;
@@ -192,7 +175,7 @@ public class Algorithm_Graph {
 	/**
 	 * 贝尔曼-福特算法（从起点到任意一点的最短路径）
 	 */
-	public static double[] BellmanFord(int start, double[][] distMatrix) {
+	static double[] BellmanFord(int start, double[][] distMatrix) {
 		double[] distance = new double[vertices]; // 从起点到各个节点的距离
 		for (int k = 0; k < vertices; k++) {
 			if (k == start) distance[k] = 0;
@@ -226,10 +209,11 @@ public class Algorithm_Graph {
 	/**
 	 * 弗洛伊德算法（任意两点最短路径）
 	 */
-	public static double[][] FloydWarshall(double[][] distMatrix) {
+	static double[][] FloydWarshall(double[][] distMatrix) {
 		for (int k = 0; k < vertices; k++) { // 中转点
 			for (int u = 0; u < vertices; u++) { // 起点
 				for (int v = 0; v < vertices; v++) { // 终点
+					// 松弛
 					if (distMatrix[u][k] + distMatrix[k][v] < distMatrix[u][v]) {
 						distMatrix[u][v] = distMatrix[u][k] + distMatrix[k][v];
 					}
@@ -244,7 +228,7 @@ public class Algorithm_Graph {
 	/**
 	 * 边缘列表转邻接矩阵（无向无权图）
 	 */
-	public static int[][] edgeList2adjMatrix(int[][] edges, int vertices) {
+	static int[][] edgeList2adjMatrix(int[][] edges, int vertices) {
 		int[][] adjMatrix = new int[vertices][vertices];
 		for (int[] edge : edges) {
 			// 无权无向图
@@ -257,7 +241,7 @@ public class Algorithm_Graph {
 	/**
 	 * 带权边缘列表转距离矩阵（无向带权图）
 	 */
-	public static double[][] weightedEdgeList2distMatrix(int[][] edges, int vertices) {
+	static double[][] weightedEdgeList2distMatrix(int[][] edges, int vertices) {
 		double[][] distMatrix = new double[vertices][vertices];
 		for (int i = 0; i < vertices; i++) {
 			for (int j = 0; j < vertices; j++) {
@@ -276,7 +260,7 @@ public class Algorithm_Graph {
 	/**
 	 * 打印整型矩阵
 	 */
-	public static void printIntMatrix(int[][] matrix) {
+	static void printIntMatrix(int[][] matrix) {
 		for (int i = 0; i < matrix.length; i++) {
 			for (int j = 0; j < matrix.length; j++) {
 				System.out.printf("%0$-3s", matrix[i][j]);
@@ -289,7 +273,7 @@ public class Algorithm_Graph {
 	/**
 	 * 打印浮点矩阵
 	 */
-	public static void printDoubleMatrix(double[][] matrix) {
+	static void printDoubleMatrix(double[][] matrix) {
 		for (int i = 0; i < matrix.length; i++) {
 			for (int j = 0; j < matrix.length; j++) {
 				System.out.printf("%0$-10s", matrix[i][j]);
@@ -302,7 +286,7 @@ public class Algorithm_Graph {
 	/**
 	 * 根据权重排序边界
 	 */
-	public static int[][] getSortedEdge(int[][] weightedEdges) {
+	static int[][] getSortedEdge(int[][] weightedEdges) {
 		Arrays.sort(weightedEdges, new Comparator<int[]>() {
 			@Override
 			public int compare(int[] o1, int[] o2) {
@@ -315,7 +299,7 @@ public class Algorithm_Graph {
 	/**
 	 * BFS检验两个节点是否在同一棵树上
 	 */
-	public static boolean inSameTree(int u, int v, double[][] matrix) {
+	static boolean inSameTree(int u, int v, double[][] matrix) {
 		Queue<Integer> queue = new LinkedList<>();
 		queue.add(u);
 		boolean[] closed = new boolean[vertices];
