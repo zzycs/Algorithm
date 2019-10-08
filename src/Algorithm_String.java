@@ -6,11 +6,7 @@
  */
 public class Algorithm_String {
 
-	public static void main(String[] args) {
-		String string = "ABCDCBA";
-		System.out.println(longestPalindrome(string));
-		System.out.println(Manacher(string));
-	}
+	public static void main(String[] args) {}
 
 	/******************** 括号匹配 ********************/
 
