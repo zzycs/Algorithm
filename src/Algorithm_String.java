@@ -174,13 +174,6 @@ public class Algorithm_String {
 		}
 	}
 
-	/**
-	 * Boyer-Moore算法
-	 */
-	static void BM(String substring, String string) {
-
-	}
-
 	/******************** 辅助方法 ********************/
 
 	/**
