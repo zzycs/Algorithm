@@ -8,12 +8,7 @@ import java.util.*;
  */
 public class Algorithm_Tree {
 
-	public static void main(String[] args) {
-		String[] array = new String[] { "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l",
-				"m", "n", "o", "p", "q" };
-		TreeNode tree = array2tree(array, 0);
-		reversedTraversal(tree);
-	}
+	public static void main(String[] args) {}
 
 	/******************** 二叉树 ********************/
 
@@ -28,7 +23,7 @@ public class Algorithm_Tree {
 		return left != null ? left : right;
 	}
 
-	/******************** 树的遍历 ********************/
+	/******************** 遍历 ********************/
 
 	/**
 	 * 前序遍历（递归）
@@ -78,7 +73,7 @@ public class Algorithm_Tree {
 	}
 
 	/**
-	 * 中序遍历
+	 * 中序遍历（非递归）
 	 */
 	static void inorderTraversal(TreeNode node) {
 		if (node == null) return;
@@ -95,7 +90,7 @@ public class Algorithm_Tree {
 	}
 
 	/**
-	 * 后序遍历
+	 * 后序遍历（非递归）
 	 */
 	static void postorderTraversal(TreeNode node) {
 		if (node == null) return;
@@ -181,7 +176,7 @@ public class Algorithm_Tree {
 		}
 	}
 
-	/******************** 树的转换 ********************/
+	/******************** 转换 ********************/
 
 	/**
 	 * 数组构建完全二叉树
