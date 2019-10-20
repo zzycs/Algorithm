@@ -1,4 +1,4 @@
-## 算法复习笔记
+## 算法
 
 ### [数组](https://github.com/zzycs/Algorithm/blob/master/src/Algorithm_Array.java)
 
