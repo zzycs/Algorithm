@@ -8,18 +8,36 @@ import java.util.*;
  */
 public class Algorithm_Array {
 
-	public static void main(String[] args) {
-		int[] array = new int[] { 20, 6, 22, 16, 3, 14, 21, 12, 8, 1, 17, 5, 23, 10, 9, 2, 18, 7,
-				4, 24, 19, 11, 15, 25, 13 };
-		for (int i : countSort(array)) {
-			System.out.print(i + " ");
+	public static void main(String[] args) {}
+
+	/****************** 区间合并 ******************/
+
+	static int[][] mergeIntervals(int[][] intervals) {
+		if (intervals.length <= 1) return intervals;
+		Arrays.sort(intervals, new Comparator<int[]>() {
+			@Override
+			public int compare(int[] o1, int[] o2) {
+				return o1[0] - o2[0];
+			}
+		});
+		ArrayList<int[]> result = new ArrayList<>();
+		int[] temp = intervals[0];
+		result.add(temp);
+		for (int[] interval : intervals) {
+			if (interval[0] <= temp[1]) {
+				temp[1] = Math.max(temp[1], interval[1]);
+			} else {
+				temp = interval;
+				result.add(temp);
+			}
 		}
+		return result.toArray(new int[result.size()][]);
 	}
 
-	/****************** 最长递增子序列 Longest Increasing Subsequence ******************/
+	/****************** 最长递增子序列 ******************/
 
 	/**
-	 * 求最长递增子序列长度
+	 * 求最长递增子序列长度 Longest Increasing Subsequence
 	 */
 	static int getLengthOfLIS(int[] array) {
 		temp = new int[array.length];
@@ -30,7 +48,7 @@ public class Algorithm_Array {
 				temp[length] = array[i];
 				length++;
 			} else {
-				int position = getInsertPosition(array, array[i], 0, length - 1);
+				int position = getInsertPosition(temp, array[i], 0, length - 1);
 				temp[position] = array[i];
 			}
 		}
@@ -38,7 +56,7 @@ public class Algorithm_Array {
 	}
 
 	/**
-	 * 打印最长递增子序列
+	 * 打印最长递增子序列 Longest Increasing Subsequence
 	 */
 	static void printLIS(int[] array) {
 		int[] sortedArray = new int[array.length];
@@ -49,10 +67,10 @@ public class Algorithm_Array {
 		printLCS(array, sortedArray, array.length, sortedArray.length);
 	}
 
-	/******************** 最长公共子序列 Longest Common Sequence ********************/
+	/******************** 最长公共子序列 ********************/
 
 	/**
-	 * 求最长公共子序列长度
+	 * 求最长公共子序列长度 Longest Common Sequence
 	 */
 	static void getLengthOfLCS(int[] a1, int[] a2) {
 		dp = new int[a1.length + 1][a2.length + 1];
@@ -70,7 +88,7 @@ public class Algorithm_Array {
 	}
 
 	/**
-	 * 打印最长公共子序列
+	 * 打印最长公共子序列 Longest Common Sequence
 	 */
 	static void printLCS(int[] a1, int[] a2, int i, int j) {
 		if (i == 0 || j == 0) return;
@@ -101,43 +119,6 @@ public class Algorithm_Array {
 	}
 
 	/**
-	 * 鸡尾酒排序
-	 */
-	static int[] cocktailSort(int[] array) {
-		int i, left = 0, right = array.length - 1;
-		while (left < right) {
-			for (i = left; i < right; i++) {
-				if (array[i] > array[i + 1]) {
-					exchange(array, i, i + 1);
-				}
-			}
-			right--;
-			for (i = right; i > left; i--) {
-				if (array[i - 1] > array[i]) {
-					exchange(array, i - 1, i);
-				}
-			}
-			left++;
-		}
-		return array;
-	}
-
-	/**
-	 * 侏儒排序
-	 */
-	static int[] gnomeSort(int[] array) {
-		for (int i = 0; i < array.length;) {
-			if (i == 0 || array[i] >= array[i - 1]) {
-				i++;
-			} else {
-				exchange(array, i, i - 1);
-				i--;
-			}
-		}
-		return array;
-	}
-
-	/**
 	 * 选择排序
 	 */
 	static int[] selectionSort(int[] array) {
@@ -149,26 +130,6 @@ public class Algorithm_Array {
 				}
 			}
 			exchange(array, i, min);
-		}
-		return array;
-	}
-
-	/**
-	 * 臭皮匠排序
-	 */
-	static int[] stoogeSort(int[] array) {
-		return stoogeSortRecursion(array, 0, array.length - 1);
-	}
-
-	static int[] stoogeSortRecursion(int[] array, int low, int high) {
-		if (array[high] < array[low]) {
-			exchange(array, low, high);
-		}
-		if (high - low + 1 >= 3) {
-			int t = (high - low + 1) / 3;
-			stoogeSortRecursion(array, low, high - t);
-			stoogeSortRecursion(array, low + t, high);
-			stoogeSortRecursion(array, low, high - t);
 		}
 		return array;
 	}
@@ -338,6 +299,63 @@ public class Algorithm_Array {
 			temp[--count[array[i] - min]] = array[i];
 		}
 		return temp;
+	}
+
+	/**
+	 * 鸡尾酒排序
+	 */
+	static int[] cocktailSort(int[] array) {
+		int i, left = 0, right = array.length - 1;
+		while (left < right) {
+			for (i = left; i < right; i++) {
+				if (array[i] > array[i + 1]) {
+					exchange(array, i, i + 1);
+				}
+			}
+			right--;
+			for (i = right; i > left; i--) {
+				if (array[i - 1] > array[i]) {
+					exchange(array, i - 1, i);
+				}
+			}
+			left++;
+		}
+		return array;
+	}
+
+	/**
+	 * 侏儒排序
+	 */
+	static int[] gnomeSort(int[] array) {
+		for (int i = 0; i < array.length;) {
+			if (i == 0 || array[i] >= array[i - 1]) {
+				i++;
+			} else {
+				exchange(array, i, i - 1);
+				i--;
+			}
+		}
+		return array;
+	}
+
+	/**
+	 * 臭皮匠排序
+	 */
+	static int[] stoogeSort(int[] array) {
+		return stoogeSortRecursion(array, 0, array.length - 1);
+	}
+
+	static int[] stoogeSortRecursion(int[] array, int low, int high) {
+		if (array[high] < array[low]) {
+			exchange(array, low, high);
+		}
+		if (high - low + 1 >= 3) {
+			int t = (high - low + 1) / 3;
+			stoogeSortRecursion(array, low, high - t);
+			stoogeSortRecursion(array, low + t, high);
+			stoogeSortRecursion(array, low, high - t);
+		}
+		return array;
 	}
 
 	/******************** 数组查找 ********************/
