@@ -11,19 +11,58 @@ public class Algorithm_List {
 	/******************** 排序 ********************/
 
 	/**
+	 * 快速排序
+	 */
+	static ListNode quickSort(ListNode head) {
+		if (head == null || head.next == null) return head;
+		// 定义三个新的链表头
+		ListNode ltHead = new ListNode(0);
+		ListNode eqHead = new ListNode(0);
+		ListNode gtHead = new ListNode(0);
+		// 定义指针
+		ListNode temp = head, lt = ltHead, eq = eqHead, gt = gtHead;
+		// 放入链表
+		while (temp != null) {
+			if (temp.value < head.value) {
+				lt.next = temp;
+				lt = lt.next;
+			} else if (temp.value > head.value) {
+				gt.next = temp;
+				gt = gt.next;
+			} else {
+				eq.next = temp;
+				eq = eq.next;
+			}
+			temp = temp.next;
+		}
+		// 截断
+		lt.next = eq.next = gt.next = null;
+		// 递归
+		ListNode p1 = quickSort(ltHead.next);
+		ListNode p2 = quickSort(eqHead.next);
+		ListNode p3 = quickSort(gtHead.next);
+		return merge1(merge1(p1, p2), p3);
+	}
+
+	/**
 	 * 归并排序
 	 */
 	static ListNode mergeSort(ListNode head) {
+		if (head == null || head.next == null) return head;
+		// 定义指针
 		ListNode prev = null, slow = head, fast = head;
+		// 分割
 		while (fast != null && fast.next != null) {
 			prev = slow;
 			slow = slow.next;
 			head = head.next.next;
 		}
+		// 截断
 		prev.next = null;
+		// 递归
 		ListNode p1 = mergeSort(head);
 		ListNode p2 = mergeSort(slow);
-		return merge(p1, p2);
+		return merge1(p1, p2);
 	}
 
 	/******************** 合并 ********************/
@@ -31,33 +70,62 @@ public class Algorithm_List {
 	/**
 	 * 合并两个排序的链表
 	 */
-	static ListNode merge(ListNode list1, ListNode list2) {
-		if (list1 == null) return list2;
-		if (list2 == null) return list1;
-		ListNode head = null;
-		ListNode temp = null;
+	static ListNode merge1(ListNode list1, ListNode list2) {
+		// 定义新的链表头
+		ListNode head = new ListNode(0);
+		ListNode temp = head;
+		// 放入链表
 		while (list1 != null && list2 != null) {
 			if (list1.value < list2.value) {
-				if (head == null) {
-					head = temp = list1;
-				} else {
-					temp.next = list1;
-					temp = temp.next;
-				}
+				temp.next = list1;
 				list1 = list1.next;
 			} else {
-				if (head == null) {
-					head = temp = list2;
-				} else {
-					temp.next = list2;
-					temp = temp.next;
-				}
+				temp.next = list2;
 				list2 = list2.next;
 			}
+			temp = temp.next;
 		}
+		// 补全
 		if (list1 != null) temp.next = list1;
 		if (list2 != null) temp.next = list2;
-		return head;
+		return head.next;
+	}
+
+	/**
+	 * 递归合并两个排序的链表
+	 */
+	static ListNode merge2(ListNode list1, ListNode list2) {
+		if (list1 == null) return list2;
+		if (list2 == null) return list1;
+		if (list1.value < list2.value) {
+			list1.next = merge2(list1.next, list2);
+			return list1;
+		} else {
+			list2.next = merge2(list1, list2.next);
+			return list2;
+		}
+	}
+
+	/**
+	 * 合并K个排序的链表
+	 */
+	static ListNode mergeLists(ListNode[] lists) {
+		return mergeListsHelper(lists, 0, lists.length - 1);
+	}
+
+	/**
+	 * 切分合并
+	 */
+	static ListNode mergeListsHelper(ListNode[] lists, int low, int high) {
+		if (low == high) return lists[low];
+		if (low < high) {
+			int mid = (low + high) / 2;
+			ListNode p1 = mergeListsHelper(lists, low, mid);
+			ListNode p2 = mergeListsHelper(lists, mid + 1, high);
+			return merge2(p1, p2);
+
+		}
+		return null;
 	}
 
 	/******************** 查找 ********************/
@@ -65,12 +133,12 @@ public class Algorithm_List {
 	/**
 	 * 两个链表的第一个公共结点
 	 */
-	static ListNode findFirstCommonNode(ListNode head1, ListNode head2) {
-		ListNode p1 = head1;
-		ListNode p2 = head2;
+	static ListNode findFirstCommonNode(ListNode list1, ListNode list2) {
+		ListNode p1 = list1;
+		ListNode p2 = list2;
 		while (p1 != p2) {
-			p1 = p1 == null ? head1 : p1.next;
-			p2 = p2 == null ? head2 : p2.next;
+			p1 = p1 == null ? list1 : p1.next;
+			p2 = p2 == null ? list2 : p2.next;
 		}
 		return p1;
 	}
