@@ -3,29 +3,17 @@ import java.util.*;
 /**
  * 图算法
  * 
- * @author zzy
+ * @author 张梓扬
+ * @email zhangziyangcn@outlook.com
  *
  */
 public class Algorithm_Graph {
 
-	public static int vertices = 6;
-	public static int[][] edges = { { 0, 1 }, { 0, 3 }, { 0, 4 }, { 1, 4 }, { 2, 3 }, { 2, 5 },
+	static int vertices = 6;
+	static int[][] edges = { { 0, 1 }, { 0, 3 }, { 0, 4 }, { 1, 4 }, { 2, 3 }, { 2, 5 },
 			{ 3, 4 } };
-	public static int[][] weightedEdges = { { 0, 1, 4 }, { 0, 3, 5 }, { 0, 4, 2 }, { 1, 4, 10 },
+	static int[][] weightedEdges = { { 0, 1, 4 }, { 0, 3, 5 }, { 0, 4, 2 }, { 1, 4, 10 },
 			{ 2, 3, 3 }, { 2, 5, 1 }, { 3, 4, 7 } };
-
-	public static void main(String[] args) {
-		int[][] adjMatrix = edgeList2adjMatrix(edges, vertices);
-		printIntMatrix(adjMatrix);
-		double[][] distMatrix = weightedEdgeList2distMatrix(weightedEdges, vertices);
-		printDoubleMatrix(distMatrix);
-	}
-
-	/******************** 旅行商问题（遍历完所有的点而可以重复） ********************/
-
-	/******************** 邮递员问题（遍历完所有的边而可以重复） ********************/
-
-	/******************** 网络流 ********************/
 
 	/******************** 最小生成树 ********************/
 
@@ -79,16 +67,16 @@ public class Algorithm_Graph {
 	/**
 	 * 广度优先搜索
 	 */
-	static void BFS(int n, int[][] adjMatrix) {
+	static void bfs(int node, int[][] adjMatrix) {
 		Queue<Integer> queue = new LinkedList<>();
-		queue.add(n);
+		queue.add(node);
 		boolean[] closed = new boolean[vertices];
-		closed[n] = true;
+		closed[node] = true;
 		while (!queue.isEmpty()) {
-			n = queue.poll();
-			System.out.print(n + " ");
+			node = queue.poll();
+			System.out.print(node + " ");
 			for (int k = 0; k < vertices; k++) {
-				if (adjMatrix[n][k] == 1 && !closed[k]) {
+				if (adjMatrix[node][k] == 1 && !closed[k]) {
 					queue.add(k);
 					closed[k] = true;
 				}
@@ -99,16 +87,16 @@ public class Algorithm_Graph {
 	/**
 	 * 深度优先搜索
 	 */
-	static void DFS1(int n, int[][] adjMatrix) {
+	static void dfs(int node, int[][] adjMatrix) {
 		Stack<Integer> stack = new Stack<>();
-		stack.add(n);
+		stack.add(node);
 		boolean[] closed = new boolean[vertices];
-		closed[n] = true;
+		closed[node] = true;
 		while (!stack.isEmpty()) {
-			n = stack.pop();
-			System.out.print(n + " ");
+			node = stack.pop();
+			System.out.print(node + " ");
 			for (int k = 0; k < vertices; k++) {
-				if (adjMatrix[n][k] == 1 && !closed[k]) {
+				if (adjMatrix[node][k] == 1 && !closed[k]) {
 					stack.push(k);
 					closed[k] = true;
 				}
@@ -119,20 +107,20 @@ public class Algorithm_Graph {
 	/**
 	 * 深度优先搜索（递归）
 	 */
-	static void DFS2(int n, int[][] adjMatrix) {
+	static void dfsRecursion(int node, int[][] adjMatrix) {
 		boolean[] visited = new boolean[vertices];
-		DFSRecusion(n, adjMatrix, visited);
+		dfsRecusion(node, adjMatrix, visited);
 	}
 
 	/**
 	 * 深度优先搜索（递归）
 	 */
-	static void DFSRecusion(int n, int[][] adjMatrix, boolean[] visited) {
-		visited[n] = true;
-		System.out.print(n + " ");
+	static void dfsRecusion(int node, int[][] adjMatrix, boolean[] visited) {
+		visited[node] = true;
+		System.out.print(node + " ");
 		for (int k = 0; k < vertices; k++) {
-			if (adjMatrix[n][k] == 1 && !visited[k]) {
-				DFSRecusion(k, adjMatrix, visited);
+			if (adjMatrix[node][k] == 1 && !visited[k]) {
+				dfsRecusion(k, adjMatrix, visited);
 			}
 		}
 	}
