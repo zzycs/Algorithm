@@ -1,18 +1,14 @@
 import java.util.*;
 
 /**
- * 剑指Offer答案汇总
+ * 剑指Offer答案
  * 
- * @author zzy
+ * @author 张梓扬
+ * @email zhangziyangcn@outlook.com
  *
  */
 @SuppressWarnings("unused")
 public class Solution {
-
-	public static void main(String[] args) {
-		int[] array = new int[] { 4, 5, 1, 6, 2, 7, 3, 8 };
-		GetLeastNumbers_Solution(array, 8);
-	}
 
 	/******************** 排列组合 ********************/
 
