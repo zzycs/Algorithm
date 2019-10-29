@@ -3,14 +3,11 @@ import java.util.HashMap;
 /**
  * 其他算法
  * 
- * @author zzy
+ * @author 张梓扬
+ * @email zhangziyangcn@outlook.com
  *
  */
 public class Algorithm_Other {
-
-	public static void main(String[] args) {
-
-	}
 
 	/******************** 最近最少使用LRU算法 ********************/
 
