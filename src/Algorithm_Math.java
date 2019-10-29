@@ -1,47 +1,20 @@
 import java.util.*;
 
 /**
- * 数学相关算法
+ * 数学算法
  * 
- * @author zzy
+ * @author 张梓扬
+ * @email zhangziyangcn@outlook.com
  *
  */
 public class Algorithm_Math {
-
-	public static void main(String[] args) {}
-
-	/******************** 分班问题 ********************/
-
-	/******************** 任务分配问题 ********************/
-
-	/******************** 区间合并问题 ********************/
-
-	/**
-	 * 合并区间
-	 */
-	static int[][] mergeInterval(int[][] intervals) {
-		// 按起点升序
-		Arrays.sort(intervals, (a1, a2) -> Integer.compare(a1[0], a2[0]));
-		ArrayList<int[]> result = new ArrayList<>();
-		int[] temp = intervals[0];
-		result.add(temp);
-		for (int[] interval : intervals) {
-			if (interval[0] <= temp[1]) // 区间重叠，终点取最大
-				temp[1] = Math.max(temp[1], interval[1]);
-			else { // 区间不重叠，加入新的区间
-				temp = interval;
-				result.add(temp);
-			}
-		}
-		return result.toArray(new int[result.size()][]);
-	}
 
 	/******************** 硬币找零问题 ********************/
 
 	/**
 	 * 最少硬币找零数量
 	 */
-	static int coinChange(int[] coins, int amount) {
+	static int getCoinChange(int[] coins, int amount) {
 		int[] dp = new int[amount + 1];
 		for (int sum = 1; sum <= amount; sum++) {
 			int minCount = -1;
@@ -190,7 +163,7 @@ public class Algorithm_Math {
 	/**
 	 * 排列（基于交换）
 	 */
-	static void permutation(int index, int[] array, ArrayList<Integer> temp,
+	static void getPermutation(int index, int[] array, ArrayList<Integer> temp,
 			ArrayList<ArrayList<Integer>> result) {
 		if (index == array.length) {
 			result.add(new ArrayList<>(temp));
@@ -198,7 +171,7 @@ public class Algorithm_Math {
 			for (int i = index; i < array.length; i++) {
 				swap(array, index, i);
 				temp.add(array[index]);
-				permutation(index + 1, array, temp, result);
+				getPermutation(index + 1, array, temp, result);
 				temp.remove(temp.size() - 1);
 				swap(array, index, i);
 			}
@@ -208,7 +181,7 @@ public class Algorithm_Math {
 	/**
 	 * 排列
 	 */
-	static void permutation(int[] array, ArrayList<Integer> temp,
+	static void getPermutation(int[] array, ArrayList<Integer> temp,
 			ArrayList<ArrayList<Integer>> result) {
 		if (temp.size() == array.length) {
 			result.add(new ArrayList<>(temp));
@@ -216,7 +189,7 @@ public class Algorithm_Math {
 			for (int i = 0; i < array.length; i++) {
 				if (temp.contains(array[i])) continue;
 				temp.add(array[i]);
-				permutation(array, temp, result);
+				getPermutation(array, temp, result);
 				temp.remove(temp.size() - 1);
 			}
 		}
@@ -225,7 +198,7 @@ public class Algorithm_Math {
 	/**
 	 * 无重复排列
 	 */
-	static void uniquePermutation(int[] array, ArrayList<Integer> temp,
+	static void getUniquePermutation(int[] array, ArrayList<Integer> temp,
 			ArrayList<ArrayList<Integer>> result, boolean[] closed) {
 		if (temp.size() == array.length) {
 			result.add(new ArrayList<>(temp));
@@ -234,7 +207,7 @@ public class Algorithm_Math {
 				if (closed[i] || i > 0 && array[i] == array[i - 1] && !closed[i - 1]) continue;
 				closed[i] = true;
 				temp.add(array[i]);
-				uniquePermutation(array, temp, result, closed);
+				getUniquePermutation(array, temp, result, closed);
 				closed[i] = false;
 				temp.remove(temp.size() - 1);
 			}
@@ -244,12 +217,12 @@ public class Algorithm_Math {
 	/**
 	 * 子集组合
 	 */
-	static void combination(int index, int[] array, ArrayList<Integer> temp,
+	static void getCombination(int index, int[] array, ArrayList<Integer> temp,
 			ArrayList<ArrayList<Integer>> result) {
 		result.add(new ArrayList<>(temp));
 		for (int i = index; i < array.length; i++) {
 			temp.add(array[i]);
-			combination(i + 1, array, temp, result);
+			getCombination(i + 1, array, temp, result);
 			temp.remove(temp.size() - 1);
 		}
 	}
@@ -257,13 +230,13 @@ public class Algorithm_Math {
 	/**
 	 * 无重复子集组合
 	 */
-	static void uniqueCombination(int index, int[] array, ArrayList<Integer> temp,
+	static void getUniqueCombination(int index, int[] array, ArrayList<Integer> temp,
 			ArrayList<ArrayList<Integer>> result) {
 		result.add(new ArrayList<>(temp));
 		for (int i = index; i < array.length; i++) {
 			if (i > index && array[i] == array[i - 1]) continue; // 跳过重复
 			temp.add(array[i]);
-			uniqueCombination(i + 1, array, temp, result);
+			getUniqueCombination(i + 1, array, temp, result);
 			temp.remove(temp.size() - 1);
 		}
 	}
@@ -271,7 +244,7 @@ public class Algorithm_Math {
 	/**
 	 * 和为sum的子集组合
 	 */
-	static void sumCombination(int index, int[] array, ArrayList<Integer> temp,
+	static void getSumCombination(int index, int[] array, ArrayList<Integer> temp,
 			ArrayList<ArrayList<Integer>> result, int sum) {
 		if (sum < 0) {
 			return;
@@ -280,7 +253,7 @@ public class Algorithm_Math {
 		} else {
 			for (int i = index; i < array.length; i++) {
 				temp.add(array[i]);
-				sumCombination(i + 1, array, temp, result, sum - array[i]);
+				getSumCombination(i + 1, array, temp, result, sum - array[i]);
 				temp.remove(temp.size() - 1);
 			}
 		}
@@ -289,7 +262,7 @@ public class Algorithm_Math {
 	/**
 	 * 和为sum的无重复子集组合
 	 */
-	static void sumUniqueCombination(int index, int[] array, ArrayList<Integer> temp,
+	static void getSumUniqueCombination(int index, int[] array, ArrayList<Integer> temp,
 			ArrayList<ArrayList<Integer>> result, int sum) {
 		if (sum < 0) {
 			return;
@@ -299,7 +272,7 @@ public class Algorithm_Math {
 			for (int i = index; i < array.length; i++) {
 				if (i > index && array[i] == array[i - 1]) continue; // 跳过重复
 				temp.add(array[i]);
-				sumCombination(i + 1, array, temp, result, sum - array[i]);
+				getSumCombination(i + 1, array, temp, result, sum - array[i]);
 				temp.remove(temp.size() - 1);
 			}
 		}
@@ -347,15 +320,5 @@ public class Algorithm_Math {
 		char temp = array[i];
 		array[i] = array[j];
 		array[j] = temp;
-	}
-
-	static void printDoubleList(ArrayList<ArrayList<Integer>> list) {
-		for (ArrayList<Integer> innerList : list) {
-			for (int element : innerList) {
-				System.out.print(element);
-			}
-			System.out.print(" ");
-		}
-		System.out.println();
 	}
 }
