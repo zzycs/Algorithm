@@ -3,17 +3,20 @@ import java.util.*;
 /**
  * 数组算法
  * 
- * @author zzy
+ * @author 张梓扬
+ * @email zhangziyangcn@outlook.com
  *
  */
 public class Algorithm_Array {
 
-	public static void main(String[] args) {}
-
-	/****************** 区间合并 ******************/
-
+	/**
+	 * 区间合并
+	 */
 	static int[][] mergeIntervals(int[][] intervals) {
-		if (intervals.length <= 1) return intervals;
+		if (intervals.length <= 1) {
+			return intervals;
+		}
+		// 排序区间
 		Arrays.sort(intervals, new Comparator<int[]>() {
 			@Override
 			public int compare(int[] o1, int[] o2) {
@@ -24,23 +27,21 @@ public class Algorithm_Array {
 		int[] temp = intervals[0];
 		result.add(temp);
 		for (int[] interval : intervals) {
-			if (interval[0] <= temp[1]) {
-				temp[1] = Math.max(temp[1], interval[1]);
+			if (interval[0] <= temp[1]) { // 重叠
+				temp[1] = Math.max(temp[1], interval[1]); // 更新尾部
 			} else {
 				temp = interval;
-				result.add(temp);
+				result.add(temp); // 添加区间
 			}
 		}
 		return result.toArray(new int[result.size()][]);
 	}
 
-	/****************** 最长递增子序列 ******************/
-
 	/**
 	 * 求最长递增子序列长度 Longest Increasing Subsequence
 	 */
 	static int getLengthOfLIS(int[] array) {
-		temp = new int[array.length];
+		int[] temp = new int[array.length];
 		temp[0] = array[0];
 		int length = 1;
 		for (int i = 1; i < array.length; i++) {
@@ -67,12 +68,10 @@ public class Algorithm_Array {
 		printLCS(array, sortedArray, array.length, sortedArray.length);
 	}
 
-	/******************** 最长公共子序列 ********************/
-
 	/**
 	 * 求最长公共子序列长度 Longest Common Sequence
 	 */
-	static void getLengthOfLCS(int[] a1, int[] a2) {
+	static int getLengthOfLCS(int[] a1, int[] a2) {
 		dp = new int[a1.length + 1][a2.length + 1];
 		for (int i = 1; i <= a1.length; i++) {
 			for (int j = 1; j <= a2.length; j++) {
@@ -85,6 +84,7 @@ public class Algorithm_Array {
 				}
 			}
 		}
+		return dp[a1.length][a2.length];
 	}
 
 	/**
@@ -102,6 +102,85 @@ public class Algorithm_Array {
 		}
 	}
 
+	/******************** 数组查找 ********************/
+
+	/**
+	 * 线性查找
+	 */
+	static boolean linearSearch(int[] array, int target, int low, int high) {
+		for (int i = low; i < high; i++) {
+			if (array[i] == target) return true;
+		}
+		return false;
+	}
+
+	/**
+	 * 二分查找（无重复数组）
+	 */
+	static int binarySearch(int[] array, int target, int low, int high) {
+		int mid;
+		while (low < high) {
+			mid = (low + high) / 2;
+			if (array[mid] < target) {
+				low = mid + 1;
+			} else if (array[mid] > target) {
+				high = mid - 1;
+			} else {
+				return mid;
+			}
+		}
+		return -1;
+	}
+
+	/**
+	 * 查找重复有序数组中的插入位置
+	 */
+	static int getInsertPosition(int[] array, int target, int low, int high) {
+		int mid;
+		while (low <= high) {
+			mid = (low + high) / 2;
+			if (array[mid] < target) {
+				low = mid + 1;
+			} else if (array[mid] > target) {
+				high = mid - 1;
+			} else {
+				return mid;
+			}
+		}
+		return low;
+	}
+
+	/**
+	 * 查找重复有序数组中出现的次数
+	 */
+	static int getFrequency(int[] array, int target, int low, int high) {
+		int mid;
+		while (low < high) {
+			mid = (low + high) / 2;
+			if (array[mid] < target) {
+				while (array[mid] == array[mid + 1]) {
+					mid++;
+				}
+				low = mid + 1;
+			} else if (array[mid] > target) {
+				while (array[mid] == array[mid - 1]) {
+					mid--;
+				}
+				high = mid - 1;
+			} else {
+				int start = mid, end = mid;
+				while (start >= low && array[start] == array[start - 1]) {
+					start--;
+				}
+				while (end <= high && array[end] == array[end + 1]) {
+					end++;
+				}
+				return start - end + 1;
+			}
+		}
+		return 0;
+	}
+
 	/******************** 数组的排序 ********************/
 
 	/**
@@ -111,7 +190,7 @@ public class Algorithm_Array {
 		for (int i = 0; i < array.length; i++) {
 			for (int j = array.length - 1; j > i; j--) {
 				if (array[j] < array[j - 1]) {
-					exchange(array, j, j - 1);
+					swap(array, j, j - 1);
 				}
 			}
 		}
@@ -129,7 +208,7 @@ public class Algorithm_Array {
 					min = j;
 				}
 			}
-			exchange(array, i, min);
+			swap(array, i, min);
 		}
 		return array;
 	}
@@ -140,7 +219,7 @@ public class Algorithm_Array {
 	static int[] insertSort(int[] array) {
 		for (int i = 1; i < array.length; i++) {
 			for (int j = i; j > 0 && array[j] < array[j - 1]; j--) {
-				exchange(array, j, j - 1);
+				swap(array, j, j - 1);
 			}
 		}
 		return array;
@@ -156,7 +235,7 @@ public class Algorithm_Array {
 		while (h > 0) {
 			for (int i = h; i < array.length; i++) {
 				for (int j = i; j >= h && array[j] < array[j - h]; j -= h) {
-					exchange(array, j, j - h);
+					swap(array, j, j - h);
 				}
 			}
 			h = h / 3;
@@ -167,7 +246,7 @@ public class Algorithm_Array {
 	/**
 	 * 归并排序（自顶向下）
 	 */
-	static int[] mergeSort1(int[] array) {
+	static int[] mergeSortFromTopToBottom(int[] array) {
 		temp = new int[array.length]; // 分配空间
 		mergeSortRecursion(array, 0, array.length - 1);
 		return array;
@@ -187,7 +266,7 @@ public class Algorithm_Array {
 	/**
 	 * 归并排序（自底向上）
 	 */
-	static int[] mergeSort2(int[] array) {
+	static int[] mergeSortFromBottomToTop(int[] array) {
 		temp = new int[array.length]; // 分配空间
 		for (int size = 1; size < array.length; size += size) { // 每一次归并的数组大小，1、2、4、8、16...
 			for (int low = 0; low < array.length - size; low += size * 2) {
@@ -218,39 +297,39 @@ public class Algorithm_Array {
 	/**
 	 * 三向切分快速排序
 	 */
-	static int[] threeWayQuickSort(int[] array) {
-		threeWayQuickSortRecursion(array, 0, array.length - 1);
+	static int[] quickSortThreeWay(int[] array) {
+		quickSortThreeWayRecursion(array, 0, array.length - 1);
 		return array;
 	}
 
 	/**
 	 * 三向切分快速排序（递归）
 	 */
-	static void threeWayQuickSortRecursion(int[] array, int low, int high) {
+	static void quickSortThreeWayRecursion(int[] array, int low, int high) {
 		if (low >= high) return;
 		int element = array[low]; // 切分元素
 		int index = low + 1, lt = low, gt = high; // 三指针索引
 		while (index <= gt) {
 			if (array[index] < element) {
-				exchange(array, index++, lt++);
+				swap(array, index++, lt++);
 			} else if (array[index] > element) {
-				exchange(array, index, gt--);
+				swap(array, index, gt--);
 			} else {
 				index++;
 			}
 		}
-		threeWayQuickSortRecursion(array, low, lt - 1);
-		threeWayQuickSortRecursion(array, gt + 1, high);
+		quickSortThreeWayRecursion(array, low, lt - 1);
+		quickSortThreeWayRecursion(array, gt + 1, high);
 	}
 
 	/**
 	 * 堆排序
 	 */
 	static int[] heapSort(int[] array) {
-		heapConstructor(array);
+		heap(array);
 		int size = array.length;
 		while (size > 0) {
-			exchange(array, 0, --size);
+			swap(array, 0, --size);
 			sink(array, 0, size);
 		}
 		return array;
@@ -309,13 +388,13 @@ public class Algorithm_Array {
 		while (left < right) {
 			for (i = left; i < right; i++) {
 				if (array[i] > array[i + 1]) {
-					exchange(array, i, i + 1);
+					swap(array, i, i + 1);
 				}
 			}
 			right--;
 			for (i = right; i > left; i--) {
 				if (array[i - 1] > array[i]) {
-					exchange(array, i - 1, i);
+					swap(array, i - 1, i);
 				}
 			}
 			left++;
@@ -331,7 +410,7 @@ public class Algorithm_Array {
 			if (i == 0 || array[i] >= array[i - 1]) {
 				i++;
 			} else {
-				exchange(array, i, i - 1);
+				swap(array, i, i - 1);
 				i--;
 			}
 		}
@@ -345,9 +424,12 @@ public class Algorithm_Array {
 		return stoogeSortRecursion(array, 0, array.length - 1);
 	}
 
+	/**
+	 * 臭皮匠排序（递归）
+	 */
 	static int[] stoogeSortRecursion(int[] array, int low, int high) {
 		if (array[high] < array[low]) {
-			exchange(array, low, high);
+			swap(array, low, high);
 		}
 		if (high - low + 1 >= 3) {
 			int t = (high - low + 1) / 3;
@@ -358,102 +440,23 @@ public class Algorithm_Array {
 		return array;
 	}
 
-	/******************** 数组查找 ********************/
-
-	/**
-	 * 线性查找
-	 */
-	static boolean linearSearch(int[] array, int target, int low, int high) {
-		for (int i = low; i < high; i++) {
-			if (array[i] == target) return true;
-		}
-		return false;
-	}
-
-	/**
-	 * 二分查找（无重复数组）
-	 */
-	static int binarySearch(int[] array, int target, int low, int high) {
-		int mid;
-		while (low < high) {
-			mid = (low + high) / 2;
-			if (array[mid] < target) {
-				low = mid + 1;
-			} else if (array[mid] > target) {
-				high = mid - 1;
-			} else {
-				return mid;
-			}
-		}
-		return -1;
-	}
-
-	/**
-	 * 查找重复有序数组中k的插入位置
-	 */
-	static int getInsertPosition(int[] array, int k, int low, int high) {
-		int mid;
-		while (low <= high) {
-			mid = (low + high) / 2;
-			if (array[mid] < k) {
-				low = mid + 1;
-			} else if (array[mid] > k) {
-				high = mid - 1;
-			} else {
-				return mid;
-			}
-		}
-		return low;
-	}
-
-	/**
-	 * 查找重复有序数组中k出现的次数
-	 */
-	static int getNumberOfK(int[] array, int k, int low, int high) {
-		int mid;
-		while (low < high) {
-			mid = (low + high) / 2;
-			if (array[mid] < k) {
-				while (array[mid] == array[mid + 1]) {
-					mid++;
-				}
-				low = mid + 1;
-			} else if (array[mid] > k) {
-				while (array[mid] == array[mid - 1]) {
-					mid--;
-				}
-				high = mid - 1;
-			} else {
-				int start = mid, end = mid;
-				while (start >= low && array[start] == array[start - 1]) {
-					start--;
-				}
-				while (end <= high && array[end] == array[end + 1]) {
-					end++;
-				}
-				return start - end + 1;
-			}
-		}
-		return 0;
-	}
-
 	/******************** 辅助方法 ********************/
 
 	/**
-	 * 交换数组中的两个元素
+	 * 交换
 	 */
-	static void exchange(int[] array, int i, int j) {
+	static void swap(int[] array, int i, int j) {
 		int temp = array[i];
 		array[i] = array[j];
 		array[j] = temp;
 	}
 
 	/**
-	 * 原地归并左右数组
+	 * 归并
 	 */
 	static int[] merge(int[] array, int low, int mid, int high) {
 		for (int k = low; k <= high; k++)
-			temp[k] = array[k]; // 更新数组
+			temp[k] = array[k]; // 复制数组
 		int i = low, j = mid + 1; // 双指针索引
 		for (int k = low; k <= high; k++) {
 			if (i > mid) { // 左边耗尽
@@ -483,16 +486,16 @@ public class Algorithm_Array {
 				if (j == low) break;
 			}
 			if (i >= j) break;
-			exchange(array, i, j);
+			swap(array, i, j);
 		}
-		exchange(array, j, low);
+		swap(array, j, low);
 		return j;
 	}
 
 	/**
-	 * 堆构造
+	 * 建堆
 	 */
-	static int[] heapConstructor(int[] array) {
+	static int[] heap(int[] array) {
 		for (int i = array.length / 2 - 1; i >= 0; i--) {
 			sink(array, i, array.length);
 		}
@@ -500,7 +503,7 @@ public class Algorithm_Array {
 	}
 
 	/**
-	 * 堆下沉
+	 * 下沉
 	 */
 	static void sink(int[] array, int i, int size) {
 		while (2 * (i + 1) <= size) {
@@ -509,19 +512,19 @@ public class Algorithm_Array {
 				j++; // 子节点索引+1
 			if (array[i] >= array[j]) // 与子节点中较大值比较
 				break;
-			exchange(array, i, j);
+			swap(array, i, j);
 			i = j;
 		}
 	}
 
 	/**
-	 * 堆上浮
+	 * 上浮
 	 */
 	static void swim(int[] array, int i) {
 		while (i > 0) {
 			int j = (i - 1) / 2; // 父节点索引
 			if (array[i] <= array[j]) break;
-			exchange(array, i, j);
+			swap(array, i, j);
 			i = j;
 		}
 	}
