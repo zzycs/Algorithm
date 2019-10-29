@@ -1,36 +1,16 @@
 /**
  * 字符串算法
  * 
- * @author zzy
+ * @author 张梓扬
+ * @email zhangziyangcn@outlook.com
  *
  */
 public class Algorithm_String {
 
-	public static void main(String[] args) {}
-
-	/******************** 括号匹配 ********************/
-
-	/******************** 回文串 ********************/
-
 	/**
 	 * 判断是否是回文串
 	 */
-	static boolean isPalindrome1(String string) {
-		int i = 0, j = string.length() - 1;
-		while (i < j) {
-			if (string.charAt(i) != string.charAt(j)) {
-				return false;
-			}
-			i++;
-			j--;
-		}
-		return true;
-	}
-
-	/**
-	 * 判断是否是回文串
-	 */
-	static boolean isPalindrome2(String string) {
+	static boolean isPalindrome(String string) {
 		int i, j;
 		if (string.length() % 2 == 0) {
 			i = string.length() / 2 - 1;
@@ -49,9 +29,9 @@ public class Algorithm_String {
 	}
 
 	/**
-	 * 最长回文子串
+	 * 求最长回文子串
 	 */
-	static int longestPalindrome(String string) {
+	static int getLongestPalindrome(String string) {
 		int count = 0, maxLength = 0;
 		for (int i = 0; i < string.length(); i++) {
 			for (int j = 0; i - j >= 0 && i + j < string.length(); j++) {
@@ -69,7 +49,7 @@ public class Algorithm_String {
 	}
 
 	/**
-	 * 最长回文子串（Manacher算法）
+	 * 求最长回文子串（Manacher算法）
 	 */
 	static int Manacher(String string) {
 		// 构造辅助字符串，例: abc123成为#a#b#c#1#2#3#2#1#
@@ -98,12 +78,10 @@ public class Algorithm_String {
 		return max - 1;
 	}
 
-	/******************** 最长公共子串 ********************/
-
 	/**
-	 * 最长公共子串（Longest Common Substring）
+	 * 求最长公共子串（Longest Common Substring）
 	 */
-	static String LCS(String s1, String s2) {
+	static String getLCS(String s1, String s2) {
 		int[][] dp = new int[s1.length()][s2.length()];
 		int max = 0, end = 0;
 		for (int i = 0; i < s1.length(); i++)
