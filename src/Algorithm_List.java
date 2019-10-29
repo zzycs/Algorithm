@@ -1,12 +1,11 @@
 /**
  * 链表算法
  * 
- * @author zzy
+ * @author 张梓扬
+ * @email zhangziyangcn@outlook.com
  *
  */
 public class Algorithm_List {
-
-	public static void main(String[] args) {}
 
 	/******************** 排序 ********************/
 
@@ -41,7 +40,7 @@ public class Algorithm_List {
 		ListNode p1 = quickSort(ltHead.next);
 		ListNode p2 = quickSort(eqHead.next);
 		ListNode p3 = quickSort(gtHead.next);
-		return merge1(merge1(p1, p2), p3);
+		return merge(merge(p1, p2), p3);
 	}
 
 	/**
@@ -62,7 +61,7 @@ public class Algorithm_List {
 		// 递归
 		ListNode p1 = mergeSort(head);
 		ListNode p2 = mergeSort(slow);
-		return merge1(p1, p2);
+		return merge(p1, p2);
 	}
 
 	/******************** 合并 ********************/
@@ -70,7 +69,7 @@ public class Algorithm_List {
 	/**
 	 * 合并两个排序的链表
 	 */
-	static ListNode merge1(ListNode list1, ListNode list2) {
+	static ListNode merge(ListNode list1, ListNode list2) {
 		// 定义新的链表头
 		ListNode head = new ListNode(0);
 		ListNode temp = head;
@@ -94,14 +93,14 @@ public class Algorithm_List {
 	/**
 	 * 递归合并两个排序的链表
 	 */
-	static ListNode merge2(ListNode list1, ListNode list2) {
+	static ListNode mergeRecursion(ListNode list1, ListNode list2) {
 		if (list1 == null) return list2;
 		if (list2 == null) return list1;
 		if (list1.value < list2.value) {
-			list1.next = merge2(list1.next, list2);
+			list1.next = mergeRecursion(list1.next, list2);
 			return list1;
 		} else {
-			list2.next = merge2(list1, list2.next);
+			list2.next = mergeRecursion(list1, list2.next);
 			return list2;
 		}
 	}
@@ -110,19 +109,19 @@ public class Algorithm_List {
 	 * 合并K个排序的链表
 	 */
 	static ListNode mergeLists(ListNode[] lists) {
-		return mergeListsHelper(lists, 0, lists.length - 1);
+		return mergeListsRecursion(lists, 0, lists.length - 1);
 	}
 
 	/**
-	 * 切分合并
+	 * 合并K个排序的链表（递归）
 	 */
-	static ListNode mergeListsHelper(ListNode[] lists, int low, int high) {
+	static ListNode mergeListsRecursion(ListNode[] lists, int low, int high) {
 		if (low == high) return lists[low];
 		if (low < high) {
 			int mid = (low + high) / 2;
-			ListNode p1 = mergeListsHelper(lists, low, mid);
-			ListNode p2 = mergeListsHelper(lists, mid + 1, high);
-			return merge2(p1, p2);
+			ListNode p1 = mergeListsRecursion(lists, low, mid);
+			ListNode p2 = mergeListsRecursion(lists, mid + 1, high);
+			return mergeRecursion(p1, p2);
 
 		}
 		return null;
@@ -133,7 +132,7 @@ public class Algorithm_List {
 	/**
 	 * 两个链表的第一个公共结点
 	 */
-	static ListNode findFirstCommonNode(ListNode list1, ListNode list2) {
+	static ListNode getFirstCommonNode(ListNode list1, ListNode list2) {
 		ListNode p1 = list1;
 		ListNode p2 = list2;
 		while (p1 != p2) {
@@ -146,7 +145,7 @@ public class Algorithm_List {
 	/**
 	 * 链表中倒数第k个结点
 	 */
-	static ListNode findKthToTail(ListNode head, int k) {
+	static ListNode getKthToTail(ListNode head, int k) {
 		if (head == null || k == 0) return null;
 		ListNode temp = head;
 		while (--k > 0) {
@@ -163,9 +162,9 @@ public class Algorithm_List {
 	/******************** 反转 ********************/
 
 	/**
-	 * 反转链表
+	 * 反转链表（双指针）
 	 */
-	static ListNode reverseList(ListNode head) {
+	static ListNode reverse(ListNode head) {
 		if (head == null) return null;
 		ListNode prev = null;
 		ListNode next = null;
@@ -176,6 +175,19 @@ public class Algorithm_List {
 			head = next;
 		}
 		return prev;
+	}
+
+	/**
+	 * 反转链表（递归）
+	 */
+	static ListNode reverseRecursion(ListNode head) {
+		if (head == null || head.next == null) {
+			return head;
+		}
+		ListNode root = reverseRecursion(head.next);
+		head.next.next = head;
+		head.next = null;
+		return root;
 	}
 
 	/******************** 环 ********************/
@@ -200,7 +212,7 @@ public class Algorithm_List {
 	/**
 	 * 链表中环的入口节点
 	 */
-	static ListNode findEntryNodeOfLoop(ListNode head) {
+	static ListNode getEntryNodeOfLoop(ListNode head) {
 		if (head == null || head.next == null) return null;
 		ListNode p1 = head;
 		ListNode p2 = head;
