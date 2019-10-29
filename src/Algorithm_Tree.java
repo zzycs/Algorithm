@@ -3,22 +3,21 @@ import java.util.*;
 /**
  * 树算法
  * 
- * @author zzy
+ * @author 张梓扬
+ * @email zhangziyangcn@outlook.com
  * 
  */
 public class Algorithm_Tree {
-
-	public static void main(String[] args) {}
 
 	/******************** 二叉树 ********************/
 
 	/**
 	 * 二叉树中两个节点的最近公共祖先节点
 	 */
-	static TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
+	static TreeNode getLowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
 		if (root == null || root == p || root == q) return root;
-		TreeNode left = lowestCommonAncestor(root.left, p, q);
-		TreeNode right = lowestCommonAncestor(root.right, p, q);
+		TreeNode left = getLowestCommonAncestor(root.left, p, q);
+		TreeNode right = getLowestCommonAncestor(root.right, p, q);
 		if (left != null && right != null) return root;
 		return left != null ? left : right;
 	}
@@ -28,35 +27,35 @@ public class Algorithm_Tree {
 	/**
 	 * 前序遍历（递归）
 	 */
-	static void preorderRecursion(TreeNode node) {
+	static void preorderTraversalRecursion(TreeNode node) {
 		if (node == null) return;
 		System.out.print(node.value);
-		preorderRecursion(node.left);
-		preorderRecursion(node.right);
+		preorderTraversalRecursion(node.left);
+		preorderTraversalRecursion(node.right);
 	}
 
 	/**
 	 * 中序遍历（递归）
 	 */
-	static void inorderRecursion(TreeNode node) {
+	static void inorderTraversalRecursion(TreeNode node) {
 		if (node == null) return;
-		inorderRecursion(node.left);
+		inorderTraversalRecursion(node.left);
 		System.out.print(node.value);
-		inorderRecursion(node.right);
+		inorderTraversalRecursion(node.right);
 	}
 
 	/**
 	 * 后序递归（递归）
 	 */
-	static void postorderRecursion(TreeNode node) {
+	static void postorderTraversalRecursion(TreeNode node) {
 		if (node == null) return;
-		postorderRecursion(node.left);
-		postorderRecursion(node.right);
+		postorderTraversalRecursion(node.left);
+		postorderTraversalRecursion(node.right);
 		System.out.print(node.value);
 	}
 
 	/**
-	 * 前序遍历（非递归）
+	 * 前序遍历
 	 */
 	static void preorderTraversal(TreeNode node) {
 		if (node == null) return;
@@ -73,7 +72,7 @@ public class Algorithm_Tree {
 	}
 
 	/**
-	 * 中序遍历（非递归）
+	 * 中序遍历
 	 */
 	static void inorderTraversal(TreeNode node) {
 		if (node == null) return;
@@ -90,7 +89,7 @@ public class Algorithm_Tree {
 	}
 
 	/**
-	 * 后序遍历（非递归）
+	 * 后序遍历
 	 */
 	static void postorderTraversal(TreeNode node) {
 		if (node == null) return;
@@ -101,8 +100,11 @@ public class Algorithm_Tree {
 			node = stack.peek();
 			if (node.left != null && !map.containsKey(node.left)) {
 				while ((node = node.left) != null) {
-					if (map.containsKey(node)) break;
-					else stack.push(node);
+					if (map.containsKey(node)) {
+						break;
+					} else {
+						stack.push(node);
+					}
 				}
 				continue;
 			}
@@ -126,15 +128,19 @@ public class Algorithm_Tree {
 		while (!queue.isEmpty()) {
 			node = queue.poll();
 			System.out.print(node.value);
-			if (node.left != null) queue.add(node.left);
-			if (node.right != null) queue.add(node.right);
+			if (node.left != null) {
+				queue.add(node.left);
+			}
+			if (node.right != null) {
+				queue.add(node.right);
+			}
 		}
 	}
 
 	/**
 	 * 之字形顺序遍历
 	 */
-	static void reversedTraversal(TreeNode node) {
+	static void reverseTraversal(TreeNode node) {
 		Stack<TreeNode> s1 = new Stack<>();
 		Stack<TreeNode> s2 = new Stack<>();
 		int layer = 1;
@@ -204,8 +210,11 @@ public class Algorithm_Tree {
 		}
 		int start = firstIndex, count = 0;
 		for (int i = start; i < input.length(); i++) {
-			if (input.charAt(i) == '(') count++;
-			else if (input.charAt(i) == ')') count--;
+			if (input.charAt(i) == '(') {
+				count++;
+			} else if (input.charAt(i) == ')') {
+				count--;
+			}
 			if (count == 0) {
 				if (start == firstIndex) {
 					root.left = string2tree1(input.substring(start + 1, i));
@@ -234,8 +243,11 @@ public class Algorithm_Tree {
 		int start = firstIndex;
 		int count = 0;
 		for (int i = start; i < input.length(); i++) {
-			if (input.charAt(i) == '(') count++;
-			else if (input.charAt(i) == ')') count--;
+			if (input.charAt(i) == '(') {
+				count++;
+			} else if (input.charAt(i) == ')') {
+				count--;
+			}
 			if (count == 1 && input.charAt(i) == ',' && start == firstIndex) {
 				root.left = string2tree2(input.substring(start + 1, i));
 				start = i;
@@ -251,7 +263,7 @@ public class Algorithm_Tree {
 /******************** 辅助类 ********************/
 
 /**
- * 树节点类（键为int，值为String）
+ * 树节点
  */
 class TreeNode {
 
